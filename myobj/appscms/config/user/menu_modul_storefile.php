@@ -1,8 +1,9 @@
 <?php
 $menu_user = array(
-	'ui'=>array(
+	'storefile'=>array(
+        'label'=>'store file','url'=>array('#'),
 		'items'=>array(
-			'store_files'=>array('label'=>'store files','url'=>array('admin/objects/models/storefile')),
+			'store_files_def'=>array('label'=>'files','url'=>array('admin/objects/models/storefile')),
 		),
 	),
 );

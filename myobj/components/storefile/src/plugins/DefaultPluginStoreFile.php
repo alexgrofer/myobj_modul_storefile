@@ -3,6 +3,13 @@ final class DefaultPluginStoreFile extends AbsPluginStoreFile implements IPlugin
 {
 	const PATH_LOAD = 'media/upload/storefile'; //главная дирректория плагина, не можем изменять
 	const NAME_CLASS_FILE= 'CStoreFile';
+    /**
+     * @var array Ключи для модели для редактирования типа CEIArray
+     */
+    protected $arrayKeysElem = array('name','url','sort');
+    public function getArrayKeysElem() {
+        return $this->arrayKeysElem;
+    }
 
 	public function buildStoreFile($ARObj) {
 		//создать объект файла

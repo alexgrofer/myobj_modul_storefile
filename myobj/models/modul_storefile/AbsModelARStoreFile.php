@@ -20,11 +20,11 @@ class AbsModelARStoreFile extends AbsModel
 	 * и любые другие:
 	 *
 	 */
-	public $file=array(array('name'=>'sdsd.jpg','sort'=>'d'));
+	public $file;
 	//build
 	public $set_name;
 	public $set_folder;
-	public $file_ui;
+	public $file_conf;
 	public $force_save;
 	public $is_randName;
 	public $width;
@@ -62,15 +62,14 @@ class AbsModelARStoreFile extends AbsModel
 
 	public function ElementsForm() {
 		return array(
-			//сделать класс CArraySerializeElemAR, посмотреть как сделан CMultiFileUpload и где лежит, сделать возможность редактировать сериализованный одноммерный массив
 			'file'=>array(
-				'type'=>'text',
-			),
-			//'<hr/>', task
-			//build
-			'file_ui'=>array(
 				'type'=>'CMultiFileUpload',
 			),
+            'file_conf'=>array(
+                'type'=>'CEIArray',
+                'confKeys'=>$this->objInitPlugin->arrayKeysElem,
+                'file'=>$this->file
+            ),
 			//может резать файлы при необходимости? архивировать?
 			'set_name'=>array(
 				'type'=>'text',

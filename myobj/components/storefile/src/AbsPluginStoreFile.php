@@ -1,5 +1,5 @@
 <?php
-abstract class AbsPluginStoreFile
+abstract class AbsPluginStoreFile extends CComponent
 {
 	/**
 	 * @var string Название класса файла
