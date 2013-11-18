@@ -43,7 +43,7 @@ class AbsModelARStoreFile extends AbsModel
 		return 'setcms_'.strtolower(get_class($this));
 	}
 
-	public function rules()
+	public function customRules()
 	{
 		return array(
 
@@ -52,7 +52,7 @@ class AbsModelARStoreFile extends AbsModel
 		);
 	}
 
-	public function attributeLabels() {
+	public function customAttributeLabels() {
 		return array(
 			//переводы?
 			'set_name'=>'name',
@@ -60,16 +60,12 @@ class AbsModelARStoreFile extends AbsModel
 		);
 	}
 
-	public function ElementsForm() {
+	public function customElementsForm() {
 		return array(
 			'file'=>array(
 				'type'=>'CMultiFileUpload',
 			),
-            'file_conf'=>array(
-                'type'=>'CEIArray',
-                'confKeys'=>$this->objInitPlugin->arrayKeysElem,
-                'file'=>$this->file
-            ),
+
 			//может резать файлы при необходимости? архивировать?
 			'set_name'=>array(
 				'type'=>'text',

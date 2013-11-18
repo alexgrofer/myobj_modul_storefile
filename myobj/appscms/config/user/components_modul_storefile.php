@@ -1,7 +1,7 @@
 <?php
 $components_user = array(
 	'storeFile'=>array(
-		'class' =>'application.modules.myobj.components.storefile.CCStoreFile',
+		'class' =>'MYOBJ.components.storefile.CCStoreFile',
 		'test8'=>'texttest'
 	),
 	'file'=>array(

@@ -9,11 +9,11 @@ class CCStoreFile extends CComponent {
 	}
 	public function init() {
 		//import
-		Yii::import('application.modules.myobj.components.storefile.src.*');
-		Yii::import('application.modules.myobj.components.storefile.src.plugins.*');
-        Yii::import('application.modules.myobj.components.storefile.behaviors.*');
-        Yii::import('application.modules.myobj.components.storefile.widgets.*');
-		Yii::import('application.modules.myobj.models.modul_storefile.*');
+		Yii::import('MYOBJ.components.storefile.src.*');
+		Yii::import('MYOBJ.components.storefile.src.plugins.*');
+        Yii::import('MYOBJ.components.storefile.behaviors.*');
+        Yii::import('MYOBJ.components.storefile.widgets.*');
+		Yii::import('MYOBJ.models.modul_storefile.*');
 	}
 
 	/**

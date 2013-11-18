@@ -7,7 +7,7 @@
 /*
  * погружаем класс для работы со списками файлов - свойственнен только для этого плагина
  */
-Yii::import('application.modules.myobj.models.modul_storefile.filesStorage');
+Yii::import('MYOBJ.models.modul_storefile.filesStorage');
 class PluginFilesStorageDefault implements InterfaceFilesStorage
 {
 	CONST URL_HOME = null;
