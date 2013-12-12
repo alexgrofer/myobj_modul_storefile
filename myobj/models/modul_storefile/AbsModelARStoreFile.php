@@ -8,18 +8,10 @@ class AbsModelARStoreFile extends AbsModel
 	public function setSelfEdit($bool) {
 		static::$adminEdit = $bool;
 	}
+
 	public function isSelfEdit() {
 		return static::$adminEdit;
 	}
-	/**
-	 * @var string Хранит сериализованный массив c ключами
-	 * обязательные:
-	 * path => 'folder1/folder2', - папка может быть пустым
-	 * name => 'file.pdf', - название файла
-	 * sort => '0', - сортировка
-	 * и любые другие:
-	 *
-	 */
 	public $file;
 	//build
 	public $set_name;
@@ -93,15 +85,15 @@ class AbsModelARStoreFile extends AbsModel
 	public function init() {
 		parent::init();
 		if(static::$adminEdit) {
-			$this->objInitPlugin = new $this->namePluginLoader($this->pluginConstructLoaderParamsConf);
+			$objAR = $this->isNewRecord?$this:null;
+			$this->objfile = yii::app()->storeFile->obj($this->pluginConstructLoaderParamsConf,$objAR);
 		}
 	}
 	protected function beforeDelete() {
 		parent::beforeDelete();
 		//build
 		if(static::$adminEdit) {
-			$file = $this->objInitPlugin->buildStoreFile($this);
-			$file->del();
+			$this->objfile->del();
 		}
 		return true;
 	}
@@ -110,8 +102,7 @@ class AbsModelARStoreFile extends AbsModel
 		if(parent::beforeSave()!==false) {
 			//build
 			if(static::$adminEdit) {
-				$file = $this->objInitPlugin->buildStoreFile($this);
-				$file->save();
+				$this->objfile->save();
 			}
 			return true;
 		}

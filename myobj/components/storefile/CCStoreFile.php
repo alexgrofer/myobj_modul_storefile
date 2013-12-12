@@ -18,30 +18,19 @@ class CCStoreFile extends CComponent {
 
 	/**
 	 * Инициализирует объекты с необходимым плагином для работы
-	 * @param string $nameClassPlugin название класса плагина
-	 * @param array $arrIdObj список объектов
+	 * @param mixed $objPlugin название плагина или сконфигурированный объект обязателен
+	 * @param mixed $arrIdObj по сути можно передать все что угодно зависит от плагина
 	 * @return mixed возвращает объект или список(array) объектов класса FileStoreCms
 	 */
-	public function obj($nameClassPlugin=null,array $arrIdObj=null) {
-		if(is_array($nameClassPlugin))  $arrIdObj = $nameClassPlugin;
-		if($nameClassPlugin===null || is_array($nameClassPlugin)) $nameClassPlugin = 'DefaultPluginStoreFile';
-		$params = array('isSelfEdit'=>false); //дополнительные параметры если это необходимо (например резать изображения другим способом)
-		$objPlugin = new $nameClassPlugin($params);
+	public function obj($objPlugin=null,array $arrIdObj=null) {
+		if(!is_object($objPlugin)) {
+			$objPlugin = new $objPlugin();
+		}
 		if($arrIdObj) {
 			return $objPlugin->factoryInit($arrIdObj);
 		}
 		else {
 			return $objPlugin->factoryInit(null);
 		}
-	}
-
-	/**
-	 * Удаление объекта-тов из базы данных
-	 * @param string $nameClassPlugin название класса плагина
-	 * плагин может обладать некими спицифичными
-	 * @param array $arrObj список объектов
-	 */
-	public function delobj($nameClassPlugin,array $arrIdObj) {
-		$nameClassPlugin::delete($arrIdObj);
 	}
 }
