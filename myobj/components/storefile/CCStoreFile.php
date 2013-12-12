@@ -19,10 +19,10 @@ class CCStoreFile extends CComponent {
 	/**
 	 * Инициализирует объекты с необходимым плагином для работы
 	 * @param mixed $objPlugin название плагина или сконфигурированный объект обязателен
-	 * @param mixed $arrIdObj по сути можно передать все что угодно зависит от плагина
+	 * @param mixed $arrIdObj по сути можно передать все что угодно для поиска файла, зависит от плагина
 	 * @return mixed возвращает объект или список(array) объектов класса FileStoreCms
 	 */
-	public function obj($objPlugin=null,array $arrIdObj=null) {
+	public function obj($objPlugin=null,$arrIdObj=null) {
 		if(!is_object($objPlugin)) {
 			$objPlugin = new $objPlugin();
 		}

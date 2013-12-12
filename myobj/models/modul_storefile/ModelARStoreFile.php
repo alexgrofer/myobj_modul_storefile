@@ -7,7 +7,7 @@ class ModelARStoreFile extends AbsModelARStoreFile
 	public $namePluginLoader=EnumerationPluginStoreFile::DEF;
 	/**
 	 * @var array настройки плагина:
-	 * ar_model_store_file - название класса модели для плагина
+	 * ar_model_store_file - название класса модели для плагина который работает с AR моделями
 	 */
 	public $pluginConstructLoaderParamsConf=array('ar_model_store_file'=>'ModelARStoreFile');
 }

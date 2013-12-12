@@ -1,9 +1,7 @@
 <?php
 /**
- * Интерфейс работает с файлами которые хранятся в контексте базы данных CActiveRecord
- * Interface IPluginStoreFileARModel
+ * Интерфейс плагина свойственный файлам которые хранятся в AR модели yii
  */
-interface IPluginStoreFileARModel
-{
-	public function buildStoreFile($ARObj);
+interface IPluginStoreFileARModel {
+
 }
