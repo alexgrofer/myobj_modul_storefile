@@ -3,11 +3,11 @@ abstract class AbsCStoreFile extends CComponent {
 	/**
 	 * @var DefaultPluginStoreFile объект плагина
 	 */
+
+	//у каждого объекта должен быть плагин для поведения
 	protected  $_objPlugin;
-	public function __construct($objPlugin,$arObj) {
-		$this->_objPlugin = $objPlugin;
-		$this->_objAr = $arObj;
-	}
+
+	//у каждого объекта должен быть уникальный id
 	private $_id;
 
 	public function getNamePlugin() {

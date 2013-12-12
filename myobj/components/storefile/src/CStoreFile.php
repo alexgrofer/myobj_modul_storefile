@@ -1,9 +1,18 @@
 <?php
-class CStoreFile extends AbsCStoreFile {
+/**
+ * Класс файла который хранится в модели AR yii
+ * Class CStoreFileModel
+ */
+class CStoreFileARModel extends AbsCStoreFile {
 	/**
 	 * @var Объект модели
 	 */
 	protected $_objAr;
+
+	public function __construct($objPlugin,$arObj) {
+		$this->_objPlugin = $objPlugin;
+		$this->_objAr = $arObj;
+	}
 	/**
 	 * Сохранить файл в базе и на сервере (может работать через сокет если это описано в плагине)
 	 */
