@@ -130,7 +130,9 @@ class AbsModelARStoreFile extends AbsModel
 					'isMany'=>true,
 				),
 				'rules'=>array(
-
+					'*'=>array(
+						array('safe'),
+					),
 				),
 				'elementsForm' => array(
 					'*'=>array(
