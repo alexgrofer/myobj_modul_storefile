@@ -2,6 +2,7 @@
 final class DefaultPluginStoreFile extends AbsPluginStoreFile implements IPluginStoreFileARModel
 {
 	const PATH_LOAD = 'media/upload/storefile'; //главная дирректория плагина, не можем изменять
+	const MODEL_AR = 'ModelARStoreFile'; //модель в которой хранятся хранится файлы
 
 	//обязательный метод определит название класса файла возвращаемый плагином
 	public function getClassFileName() {
@@ -25,7 +26,7 @@ final class DefaultPluginStoreFile extends AbsPluginStoreFile implements IPlugin
 			$objModelStoreFile = $arrIdObj;
 		}
 		else {
-			$nameClassARModel = $this->_params['ar_model_store_file'];
+			$nameClassARModel = $this::MODEL_AR;
 			$objModelStoreFile = new $nameClassARModel();
 		}
 
