@@ -31,10 +31,7 @@ abstract class AbsCStoreFile extends CComponent {
 		$this->_realArrayConfObj[$key][$name] = $val;
 	}
 
-	//custom methods
-	/**
-	 * @var string папка сохранения для всех новых объектов
-	 */
+	//папка сохранения для всех новых объектов
 	private $_folderAll;
 	public function setFolderAll($folder) {
 		$this->_folderAll = $folder;
@@ -42,7 +39,7 @@ abstract class AbsCStoreFile extends CComponent {
 	public function getFolderAll() {
 		return ($this->_folderAll)?$this->_folderAll:'';
 	}
-
+	//признако что файлы будут сохранятся с рандомными названиями
 	private $_isRandAll;
 	public function setIsRandAll($bool) {
 		$this->_isRandAll = $bool;
@@ -50,8 +47,17 @@ abstract class AbsCStoreFile extends CComponent {
 	public function getIsRandAll() {
 		return $this->_isRandAll;
 	}
+	//добавить множество файлов
+	private $_filesMany;
+	public function setFilesMany($arrayPath) {
+		$this->_filesMany = $arrayPath;
+	}
+	public function getFilesMany() {
+		return ($this->_filesMany)?$this->_filesMany:array();
+	}
 	//end custom methods
 
+	//установить новое название для файла
 	public function set_name($name,$key=0) {
 		$this->_setDefParam('name',$key,$name);
 	}
@@ -64,7 +70,7 @@ abstract class AbsCStoreFile extends CComponent {
 	public function getName() {
 		return $this->get_name(0);
 	}
-
+	//установить описание для файла
 	public function set_title($title,$key=0) {
 		$this->_setDefParam('title',$key,$title);
 	}
@@ -77,7 +83,7 @@ abstract class AbsCStoreFile extends CComponent {
 	public function getTitle() {
 		return $this->get_title(0);
 	}
-
+	//относительный путь в файлу
 	public function set_path($path,$key=0) {
 		$this->_setDefParam('path',$key,$path);
 	}
@@ -90,7 +96,7 @@ abstract class AbsCStoreFile extends CComponent {
 	public function getPath() {
 		return $this->get_path(0);
 	}
-
+	//сортировка файлов
 	public function set_sort($sort,$key=0) {
 		$this->_setDefParam('sort',$key,$sort);
 	}
@@ -103,7 +109,7 @@ abstract class AbsCStoreFile extends CComponent {
 	public function getSort() {
 		return $this->get_sort(0);
 	}
-
+	//установить расширение для файла
 	public function set_ex($ex,$key=0) {
 		$this->_setDefParam('ex',$key,$ex);
 	}
@@ -117,6 +123,8 @@ abstract class AbsCStoreFile extends CComponent {
 		return $this->get_ex(0);
 	}
 	//not real
+
+	//установить новый файл
 	public function set_file($path,$key=0) {
 		$this->_tmpArrayConfObj[$key]['file'] = $path;
 	}
@@ -129,7 +137,7 @@ abstract class AbsCStoreFile extends CComponent {
 	public function getFile() {
 		return $this->get_file(0);
 	}
-
+	//установить новое название для файла
 	public function set_isRand($bool,$key=0) {
 		$this->_tmpArrayConfObj[$key]['rand'] = $bool;
 	}
