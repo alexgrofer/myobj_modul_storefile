@@ -47,11 +47,12 @@ class AbsModelARStoreFile extends AbsModel
 	 */
 	protected $namePluginLoader;
 
+	private $_objfile;
 	public function init() {
 		parent::init();
 		//плагин может управлять моделью к примеру relation
 		$objPlugin = new $this->namePluginLoader();
-		$this->objfile = yii::app()->storeFile->obj($objPlugin,$this);
+		$this->_objfile = yii::app()->storeFile->obj($objPlugin,$this);
 	}
 	protected function beforeDelete() {
 		parent::beforeDelete();
@@ -132,7 +133,9 @@ class AbsModelARStoreFile extends AbsModel
 
 				),
 				'elementsForm' => array(
-
+					'*'=>array(
+						'type'=>'text',
+					),
 				),
 			)
 		);
