@@ -101,21 +101,8 @@ abstract class AbsCStoreFile extends CComponent {
 	public function getSort() {
 		return $this->get_sort(0);
 	}
-	//установить расширение для файла
-	public function set_ex($ex,$key=0) {
-		$this->_setDefParam('ex',$key,$ex);
-	}
-	public function get_ex($key) {
-		return $this->_getDefParam('ex',$key);
-	}
-	public function setEx($path) {
-		$this->set_ex($path,0);
-	}
-	public function getEx() {
-		return $this->get_ex(0);
-	}
-	//not real
 
+	//not real это не сохранятся только для признака что делать с файлом
 	//установить новый файл
 	public function set_file($path,$key=0) {
 		$this->_tmpArrayConfObj[$key]['file'] = $path;
