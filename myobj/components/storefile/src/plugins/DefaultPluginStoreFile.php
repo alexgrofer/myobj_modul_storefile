@@ -22,7 +22,7 @@ final class DefaultPluginStoreFile extends AbsPluginStoreFile implements IPlugin
 	 */
 	public function factoryInit($arrIdObj=null) {
 		$nameClassARModel = $this->_params['ar_model_store_file'];
-		$objModelStoreFile = $nameClassARModel::model();
+		$objModelStoreFile = new $nameClassARModel();
 		if(!$arrIdObj) {
 			return $this->buildStoreFile($objModelStoreFile);
 		}
