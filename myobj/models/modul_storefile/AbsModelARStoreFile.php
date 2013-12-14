@@ -13,7 +13,7 @@ class AbsModelARStoreFile extends AbsModel
 	public $content_file_array;
 	//дата загрузки
 	public $loadDate;
-	/* Имет значение когда будет отдельная строка для каждого файла, ONE когда нужно более 10 файлов
+	/* Имет значение когда будет отдельnная строка для каждого файла, ONE когда нужно более 10 файлов
 	public $sort=null;
 	public $size=null;
 	*/
@@ -47,12 +47,11 @@ class AbsModelARStoreFile extends AbsModel
 	 */
 	protected $namePluginLoader;
 	protected $pluginConstructLoaderParamsConf;
-	protected $objInitPlugin;
 
 	public function init() {
 		parent::init();
 		//плагин может управлять моделью к примеру relation
-		$this->objfile = yii::app()->storeFile->obj($this->pluginConstructLoaderParamsConf,$this);
+		$this->objfile = yii::app()->storeFile->obj($this->namePluginLoader,$this);
 	}
 	protected function beforeDelete() {
 		parent::beforeDelete();
