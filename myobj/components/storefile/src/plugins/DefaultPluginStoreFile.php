@@ -17,16 +17,22 @@ final class DefaultPluginStoreFile extends AbsPluginStoreFile implements IPlugin
 
 	/**
 	 * Инициализация объектов файлов свойственной для этого планина, каждый плагин может по своему искать, инициализировать файлы
-	 * @param null $arrIdObj список файлов
+	 * @param null $arrIdObj массив id файлов или объект AR
 	 * @return mixed может быть массив или один объект типа getClassFileName
 	 */
 	public function factoryInit($arrIdObj=null) {
-		$nameClassARModel = $this->_params['ar_model_store_file'];
-		$objModelStoreFile = new $nameClassARModel();
+		if(is_object($arrIdObj)) {
+			$objModelStoreFile = $arrIdObj;
+		}
+		else {
+			$nameClassARModel = $this->_params['ar_model_store_file'];
+			$objModelStoreFile = new $nameClassARModel();
+		}
+
 		if(!$arrIdObj) {
 			return $this->buildStoreFile($objModelStoreFile);
 		}
-		elseif(count($arrIdObj)) {
+		elseif(is_array($arrIdObj) && count($arrIdObj)) {
 			$objModelStoreFile->dbCriteria->addInCondition('id', $arrIdObj);
 			$arrayObjARStoreFile = $objModelStoreFile->findAll();
 			$arrayObjStoreFile = array();
