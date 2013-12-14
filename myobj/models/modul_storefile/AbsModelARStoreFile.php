@@ -42,29 +42,29 @@ class AbsModelARStoreFile extends AbsModel
 	//----------------------дополнительные параметры все зависит от плагина т.к он будет их проверять при сохранении объекта
 	//end
 	//conf
-	/**
-	 * @var DefaultPluginStoreFile Название класса плагина для обработки
-	 */
-	protected $namePluginLoader;
 
-	private $_objfile;
+	//название плагина если редактирование из админки
+	public $namePluginLoader;
+
+	//тут файл
+	public $objfile;
 	public function init() {
 		parent::init();
 		//плагин может управлять моделью к примеру relation
 		$objPlugin = new $this->namePluginLoader();
-		$this->_objfile = yii::app()->storeFile->obj($objPlugin,$this);
+		$this->objfile = yii::app()->storeFile->obj($objPlugin,$this);
 	}
 	protected function beforeDelete() {
 		parent::beforeDelete();
 		//плагин обозначенный при init знает что делать дальше в методе del
-		$this->_objfile->del();
+		$this->objfile->del();
 		return true;
 	}
 
 	protected function beforeSave() {
 		if(parent::beforeSave()!==false) {
 			//плагин обозначенный при init знает что делать дальше в методе save
-			$this->_objfile->save();
+			$this->objfile->save();
 			return true;
 		}
 		else return parent::beforeSave();
@@ -114,6 +114,7 @@ class AbsModelARStoreFile extends AbsModel
 			'is_archiv'=>array(
 				'type'=>'checkbox',
 			),
+			'<hr/>files:<hr/>'
 		);
 	}
 
