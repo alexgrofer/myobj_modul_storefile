@@ -31,23 +31,15 @@ abstract class AbsCStoreFile extends CComponent {
 		$this->_realArrayConfObj[$key][$name] = $val;
 	}
 
-	//папка сохранения для всех новых объектов
-	private $_folderAll;
-	public function setFolderAll($folder) {
-		$this->_folderAll = $folder;
+	//признак что файлы будут сохранятся с рандомными названиями MANY
+	private $_isRandMany;
+	public function setIsRandMany($bool) {
+		$this->_isRandMany = $bool;
 	}
-	public function getFolderAll() {
-		return ($this->_folderAll)?$this->_folderAll:'';
+	public function getIsRandMany() {
+		return $this->_isRandMany;
 	}
-	//признако что файлы будут сохранятся с рандомными названиями
-	private $_isRandAll;
-	public function setIsRandAll($bool) {
-		$this->_isRandAll = $bool;
-	}
-	public function getIsRandAll() {
-		return $this->_isRandAll;
-	}
-	//добавить множество файлов
+	//добавить множество файлов MANY
 	private $_filesMany;
 	public function setFilesMany($arrayPath) {
 		$this->_filesMany = $arrayPath;
