@@ -30,7 +30,7 @@ final class DefaultPluginStoreFile extends AbsPluginStoreFile implements IPlugin
 			$objModelStoreFile = new $nameClassARModel();
 		}
 
-		if(!$arrIdObj) {
+		if(!$arrIdObj || is_object($arrIdObj)) {
 			return $this->buildStoreFile($objModelStoreFile);
 		}
 		elseif(is_array($arrIdObj) && count($arrIdObj)) {
@@ -43,5 +43,14 @@ final class DefaultPluginStoreFile extends AbsPluginStoreFile implements IPlugin
 			return $arrayObjStoreFile;
 		}
 	}
-	//можно организовать некоторые вспомогательные методы?
+
+	//описывает что делать с объектом при сохранении
+	public function save() {
+
+	}
+
+	//описывает что делать с объектом при удалении
+	public function del() {
+
+	}
 }

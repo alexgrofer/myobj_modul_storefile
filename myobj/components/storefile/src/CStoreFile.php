@@ -3,7 +3,7 @@
  * Класс файла который хранится в модели AR yii
  * Class CStoreFileModel
  */
-class CStoreFileARModel extends AbsCStoreFile {
+class CStoreFile extends AbsCStoreFile {
 	/**
 	 * @var Объект модели
 	 */
@@ -17,11 +17,7 @@ class CStoreFileARModel extends AbsCStoreFile {
 	 * Сохранить файл в базе и на сервере (может работать через сокет если это описано в плагине)
 	 */
 	public function save() {
-		//переписать объекты из базы данных если изменялся - делает плагин
-		//сохранить файл если он изменялся - делает плагин
-		//если исключение удалить файл - делает плагин
-		/* @var CFile $objCFile */
-		$this->_objPlugin->save($this, $this->_objAr);
+		$this->_objPlugin->save($this->_objAr);
 	}
 
 	/**
@@ -32,6 +28,6 @@ class CStoreFileARModel extends AbsCStoreFile {
 		if($key) {
 			unset($this->_realArrayConfObj[$key]);
 		}
-		$this->_objPlugin->del($this, $this->_objAr);
+		$this->_objPlugin->del($this->_objAr);
 	}
 }

@@ -57,14 +57,14 @@ class AbsModelARStoreFile extends AbsModel
 	protected function beforeDelete() {
 		parent::beforeDelete();
 		//плагин обозначенный при init знает что делать дальше в методе del
-		$this->objfile->del();
+		$this->_objfile->del();
 		return true;
 	}
 
 	protected function beforeSave() {
 		if(parent::beforeSave()!==false) {
 			//плагин обозначенный при init знает что делать дальше в методе save
-			$this->objfile->save();
+			$this->_objfile->save();
 			return true;
 		}
 		else return parent::beforeSave();
@@ -72,7 +72,7 @@ class AbsModelARStoreFile extends AbsModel
 
 	public function customRules() {
 		return array(
-			array('cotent_file_array', 'required'),
+			array('content_file_array', 'required'),
 		);
 	}
 
