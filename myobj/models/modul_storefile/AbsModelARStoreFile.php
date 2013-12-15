@@ -48,6 +48,15 @@ class AbsModelARStoreFile extends AbsModel
 
 	//тут файл
 	public $objfile;
+	public function init() {
+		parent::init();
+		//в админке придется самостоятельно вызывать obj()
+		if(Yii::app()->controller->id=='admin') {
+			//плагин может управлять моделью к примеру relation
+			$objPlugin = new $this->namePluginLoader(); //в конструкторе можно сконфигурировать плагин
+			$this->objfile = yii::app()->storeFile->obj($objPlugin,$this);
+		}
+	}
 	protected function beforeDelete() {
 		parent::beforeDelete();
 		//плагин в файле знает что делать дальше в методе del
