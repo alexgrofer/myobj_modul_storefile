@@ -19,12 +19,12 @@ class AbsModelARStoreFile extends AbsModel
 	*/
 
 	//параметры которых нет в схеме таблицы
-	//индекс элемента который будет редактироваться
+	//индекс(начиная с 0 earray) элемента который будет редактироваться, если пусто то новый
 	public $indexEdit;
 	//путь к новому файлу
 	public $fileAdd;
 	//название для файла - если не указать то оригинальное название
-	public $name;
+	public $nameFile;
 	//описание файла
 	public $title;
 	//путь относительно базовой папки - базовая папки и работа с дирректориями серверами лежит в логике плагина
@@ -59,6 +59,20 @@ class AbsModelARStoreFile extends AbsModel
 
 	protected function beforeSave() {
 		if(parent::beforeSave()!==false) {
+			$indexEdit = $this->indexEdit;
+			//добавить новый файл
+			if($indexEdit=='') {
+				//посчитать колличество элементов массиве и прибавать 1
+
+			}
+
+			//если указал новое имя или поставил галку рандом
+			if($this->nameFile!='' || $this->is_randName) {
+				static::$thiObjFile->setName('sdfsf', $indexEdit);
+			}
+
+			//сортировка
+			exit;
 			//плагин в файле знает что делать дальше в методе save
 			static::$thiObjFile->save();
 			return true;
@@ -87,7 +101,7 @@ class AbsModelARStoreFile extends AbsModel
 			'fileAdd'=>array(
 				'type'=>'CMultiFileUpload',
 			),
-			'name'=>array(
+			'nameFile'=>array(
 				'type'=>'text',
 			),
 			'title'=>array(
