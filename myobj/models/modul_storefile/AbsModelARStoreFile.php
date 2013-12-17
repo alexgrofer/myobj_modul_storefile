@@ -19,8 +19,10 @@ class AbsModelARStoreFile extends AbsModel
 	*/
 
 	//параметры которых нет в схеме таблицы
+	//индекс элемента который будет редактироваться
+	public $indexEdit;
 	//путь к новому файлу
-	public $file;
+	public $fileAdd;
 	//название для файла - если не указать то оригинальное название
 	public $name;
 	//описание файла
@@ -47,27 +49,18 @@ class AbsModelARStoreFile extends AbsModel
 	public $namePluginLoader;
 
 	//тут файл
-	public $objfile;
-	public function init() {
-		parent::init();
-		//в админке придется самостоятельно вызывать obj()
-		if(Yii::app()->controller->id=='admin') {
-			//плагин может управлять моделью к примеру relation
-			$objPlugin = new $this->namePluginLoader(); //в конструкторе можно сконфигурировать плагин
-			$this->objfile = yii::app()->storeFile->obj($objPlugin,$this);
-		}
-	}
+	public static $thiObjFile;
 	protected function beforeDelete() {
 		parent::beforeDelete();
 		//плагин в файле знает что делать дальше в методе del
-		$this->objfile->del();
+		static::$thiObjFile->del();
 		return true;
 	}
 
 	protected function beforeSave() {
 		if(parent::beforeSave()!==false) {
 			//плагин в файле знает что делать дальше в методе save
-			$this->objfile->save();
+			static::$thiObjFile->save();
 			return true;
 		}
 		else return parent::beforeSave();
@@ -76,6 +69,7 @@ class AbsModelARStoreFile extends AbsModel
 	public function customRules() {
 		return array(
 			array('content_file_array', 'required'),
+			array('indexEdit', 'numerical', 'integerOnly'=>true),
 		);
 	}
 
@@ -87,7 +81,10 @@ class AbsModelARStoreFile extends AbsModel
 
 	public function customElementsForm() {
 		return array(
-			'file'=>array(
+			'indexEdit'=>array(
+				'type'=>'text',
+			),
+			'fileAdd'=>array(
 				'type'=>'CMultiFileUpload',
 			),
 			'name'=>array(

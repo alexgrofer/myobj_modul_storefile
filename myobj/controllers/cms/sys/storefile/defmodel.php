@@ -1,6 +1,13 @@
 <?php
-//edit
-if($this->dicturls['action']!='edit') {
-	//можно поменять представление и логику работы, не стоит опираться на переменную $modelAD,вообще лучше обойтись пространством имен
+$objPlugin = new $modelAD->namePluginLoader();
+$modelAD::$thiObjFile = yii::app()->storeFile->obj($objPlugin,$this);
+
+//если добавил файл или файлы
+
+$files = CUploadedFile::getInstancesByName(get_class($modelAD).'[fileAdd]');
+if($files) {
+	$modelAD::$thiObjFile->filesMany = $files;
+
 }
+
 
