@@ -53,4 +53,9 @@ final class DefaultPluginStoreFile extends AbsPluginStoreFile implements IPlugin
 	public function del() {
 
 	}
+
+	//кастомно определяет правила валидации для текушей модели файла
+	public function validateModel() {
+
+	}
 }
