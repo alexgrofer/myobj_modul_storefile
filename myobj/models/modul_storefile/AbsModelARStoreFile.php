@@ -14,11 +14,15 @@ class AbsModelARStoreFile extends AbsModel
 	//дата загрузки
 	public $loadDate;
 	/* Имет значение когда будет отдельnная строка для каждого файла, ONE когда нужно более 10 файлов
-	public $sort=null;
-	public $size=null;
+	public $sort;
+	public $size;
+
+	public $top; //к примеру категория программы или фото-альбом при создании новой модели придумать название колонки или даже сделать внешний ключ
 	*/
+	//end
 
 	//параметры которых нет в схеме таблицы
+
 	//индекс(начиная с 0 earray) элемента который будет редактироваться, если пусто то новый
 	public $indexEdit;
 	//путь к новому файлу
@@ -59,21 +63,8 @@ class AbsModelARStoreFile extends AbsModel
 
 	protected function beforeSave() {
 		if(parent::beforeSave()!==false) {
-			$indexEdit = $this->indexEdit;
-			//добавить новый файл
-			if($indexEdit=='') {
-				//посчитать колличество элементов массиве и прибавать 1
-
-			}
-
-			//если указал новое имя или поставил галку рандом
-			if($this->nameFile!='' || $this->is_randName) {
-				static::$thiObjFile->setName('sdfsf', $indexEdit);
-			}
-
-			//сортировка
+			echo $this->indexEdit;
 			exit;
-			//плагин в файле знает что делать дальше в методе save
 			static::$thiObjFile->save();
 			return true;
 		}
