@@ -64,6 +64,6 @@ final class DefaultPluginStoreFile extends AbsPluginStoreFile implements IPlugin
 	}
 	//индекс следующего нового элемента
 	public function getNextIndex() {
-		return count($this->arObj->get_EArray(self::COL_NAME_FILE_AR))-1;
+		return count($this->arObj->get_EArray(self::COL_NAME_FILE_AR));
 	}
 }

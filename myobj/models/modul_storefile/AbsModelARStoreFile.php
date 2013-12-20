@@ -124,7 +124,7 @@ class AbsModelARStoreFile extends AbsModel
 			'is_archiv'=>array(
 				'type'=>'checkbox',
 			),
-			'<hr/>files:<hr/>'
+			'<hr/>files: <span style="color: red">not edit element IF want edit file!! only DB saves</span><hr/>'
 		);
 	}
 

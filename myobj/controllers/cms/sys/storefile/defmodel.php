@@ -13,10 +13,15 @@ if($paramsQueryPostModel) {
 if((isset($isValidate) && $isValidate) && $this->dicturls['action']=='edit') {
 	$files = CUploadedFile::getInstancesByName(get_class($modelAD).'[fileAdd]');
 	if($files) {
-		/* ФАЙЛ */
-		//если хочет добавить еще файлы
+		//заливка множества файлов
 		if($modelAD->indexEdit=='' && count($files)>1) {
+			/* ФАЙЛЫ */
 			$modelAD::$thiObjFile->filesMany = $files;
+			/* РАНДОМНЫЕ ИМЕНА */
+			if($modelAD->is_randName) {
+				static::$thiObjFile->isRandMany = true;
+			}
+			/* ... */
 		}
 		//в случае с отдельным файлом или редактировании отдельного элемента
 		elseif(count($files)==1 || $modelAD->indexEdit!='') {
@@ -35,6 +40,7 @@ if((isset($isValidate) && $isValidate) && $this->dicturls['action']=='edit') {
 			elseif($modelAD->nameFile!='') {
 				static::$thiObjFile->setName($indexEdit);
 			}
+			/* ... */
 		}
 	}
 }
