@@ -19,8 +19,6 @@ abstract class AbsCStoreFile extends CComponent {
 
 	private $_realArrayConfObj=array();
 
-	private $_tmpArrayConfObj=array();
-
 	protected function _getDefParam($name,$key) {
 		return (isset($this->_realArrayConfObj[$key]) && isset($this->_realArrayConfObj[$key][$name]))?
 			$this->_realArrayConfObj[$key][$name]
@@ -105,10 +103,10 @@ abstract class AbsCStoreFile extends CComponent {
 	//not real это не сохранятся только для признака что делать с файлом
 	//установить новый файл
 	public function set_file($path,$key=0) {
-		$this->_tmpArrayConfObj[$key]['file'] = $path;
+		$this->_setDefParam('file',$key,$path);
 	}
 	public function get_file($key) {
-		return $this->_tmpArrayConfObj[$key]['file'];
+		return $this->_getDefParam('file',$key);
 	}
 	public function setFile($path) {
 		$this->set_file($path,0);
@@ -118,10 +116,10 @@ abstract class AbsCStoreFile extends CComponent {
 	}
 	//установить новое название для файла
 	public function set_isRand($bool,$key=0) {
-		$this->_tmpArrayConfObj[$key]['rand'] = $bool;
+		$this->_setDefParam('rand',$key,$bool);
 	}
 	public function get_isRand($key) {
-		$this->_tmpArrayConfObj[$key]['rand'];
+		return $this->_getDefParam('rand',$key);
 	}
 	public function setIsRand($bool) {
 		$this->set_isRand($bool,0);

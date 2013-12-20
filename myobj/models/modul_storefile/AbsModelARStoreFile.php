@@ -25,12 +25,12 @@ class AbsModelARStoreFile extends AbsModel
 
 	//индекс(начиная с 0 earray) элемента который будет редактироваться, если пусто то новый
 	public $indexEdit;
-	//путь к новому файлу
-	public $fileAdd;
 	//название для файла - если не указать то оригинальное название
 	public $nameFile;
 	//описание файла
 	public $title;
+	//сортировка
+	public $file_sort;
 	//путь относительно базовой папки - базовая папки и работа с дирректориями серверами лежит в логике плагина
 	public $path;
 	//загрузить файл если даже он есть
@@ -81,7 +81,20 @@ class AbsModelARStoreFile extends AbsModel
 			array('createDate', 'default',
 				'value'=>new CDbExpression('NOW()'),
 				'on'=>'insert', //еще бывают update,search http://www.yiiframework.com/wiki/266/understanding-scenarios
-			)
+			),
+			//not real elem
+			array('indexEdit','safe'),
+			array('nameFile','safe'),
+			array('title','safe'),
+			array('file_sort','safe'),
+			array('path','safe'),
+			array('force_save','safe'),
+			array('is_randName','safe'),
+			array('width','safe'),
+			array('height','safe'),
+			array('is_crop','safe'),
+			array('is_archiv','safe'),
+			array('is_del','safe'),
 		);
 	}
 

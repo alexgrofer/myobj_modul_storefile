@@ -23,7 +23,7 @@ if((isset($isValidate) && $isValidate) && $this->dicturls['action']=='edit') {
 			$modelAD::$thiObjFile->filesMany = $files;
 			/* РАНДОМНЫЕ ИМЕНА */
 			if($modelAD->is_randName) {
-				static::$thiObjFile->isRandMany = true;
+				$modelAD::$thiObjFile->isRandMany = true;
 			}
 			/* ... */
 		}
