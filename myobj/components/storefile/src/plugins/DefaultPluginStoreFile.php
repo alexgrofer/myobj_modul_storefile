@@ -49,12 +49,13 @@ final class DefaultPluginStoreFile extends AbsPluginStoreFile implements IPlugin
 	}
 
 	//описывает что делать с объектом при сохранении
-	public function save() {
-
+	public function save($objFile) {
+		echo $objFile;
+		exit;
 	}
 
 	//описывает что делать с объектом при удалении
-	public function del() {
+	public function del($objFile,$key=null) {
 
 	}
 

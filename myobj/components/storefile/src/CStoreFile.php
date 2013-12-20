@@ -15,7 +15,7 @@ class CStoreFile extends AbsCStoreFile {
 	 * Сохранить файл в базе и на сервере (может работать через сокет если это описано в плагине)
 	 */
 	public function save() {
-		$this->objPlugin->save();
+		$this->objPlugin->save($this);
 	}
 
 	/**
@@ -26,6 +26,6 @@ class CStoreFile extends AbsCStoreFile {
 		if($key) {
 			unset($this->_realArrayConfObj[$key]);
 		}
-		$this->objPlugin->del();
+		$this->objPlugin->del($this,$key);
 	}
 }

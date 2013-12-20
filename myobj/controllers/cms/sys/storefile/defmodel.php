@@ -9,12 +9,16 @@ if($paramsQueryPostModel) {
 	$isValidate = $modelAD->validate();
 }
 
+//можно удалять отдельные элементы
+if($modelAD->is_del && $modelAD->indexEdit!='') {
+	static::$thiObjFile->del($modelAD->indexEdit);
+}
 //если добавил файл или файлы,все остальные действия перекладываем на плагин и модель
 if((isset($isValidate) && $isValidate) && $this->dicturls['action']=='edit') {
 	$files = CUploadedFile::getInstancesByName(get_class($modelAD).'[fileAdd]');
 	if($files) {
 		//заливка множества файлов
-		if($modelAD->indexEdit=='' && count($files)>1) {
+		if(count($files)>1) {
 			/* ФАЙЛЫ */
 			$modelAD::$thiObjFile->filesMany = $files;
 			/* РАНДОМНЫЕ ИМЕНА */
@@ -24,7 +28,7 @@ if((isset($isValidate) && $isValidate) && $this->dicturls['action']=='edit') {
 			/* ... */
 		}
 		//в случае с отдельным файлом или редактировании отдельного элемента
-		elseif(count($files)==1 || $modelAD->indexEdit!='') {
+		else {
 			if($modelAD->indexEdit!='') {
 				$indexEdit = $modelAD->indexEdit;
 			}
@@ -32,7 +36,9 @@ if((isset($isValidate) && $isValidate) && $this->dicturls['action']=='edit') {
 				$indexEdit = $modelAD::$thiObjFile->objPlugin->getNextIndex();
 			}
 			/* ФАЙЛ */
-			$modelAD::$thiObjFile->setFile($files[0],$indexEdit);
+			if($files) {
+				$modelAD::$thiObjFile->setFile($files[0],$indexEdit);
+			}
 			/* ИМЯ ФАЙЛА */
 			if($modelAD->is_randName) {
 				static::$thiObjFile->is($indexEdit);

@@ -45,6 +45,8 @@ class AbsModelARStoreFile extends AbsModel
 	public $is_crop;
 	//архивация
 	public $is_archiv;
+	//удалить элемент
+	public $is_del;
 	//----------------------дополнительные параметры все зависит от плагина т.к он будет их проверять при сохранении объекта
 	//end
 	//conf
@@ -124,6 +126,9 @@ class AbsModelARStoreFile extends AbsModel
 			'is_archiv'=>array(
 				'type'=>'checkbox',
 			),
+			'is_del'=>array(
+				'type'=>'checkbox',
+			),
 			'<hr/>files: <span style="color: red">not edit element IF want edit file!! only DB saves</span><hr/>'
 		);
 	}
@@ -135,7 +140,7 @@ class AbsModelARStoreFile extends AbsModel
 					'name',
 					'title',
 					'path',
-					'sort',
+					'sort',//при отдельном хранении файла не нужен ТУТ
 				),
 				'conf' => array(
 					'isMany'=>true,
