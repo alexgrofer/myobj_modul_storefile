@@ -2,8 +2,15 @@
 $objPlugin = new $modelAD->namePluginLoader();
 $modelAD::$thiObjFile = yii::app()->storeFile->obj($objPlugin,$this);
 
+$paramsQueryPostModel = yii::app()->getRequest()->getPost(get_class($modelAD));
+if($paramsQueryPostModel) {
+	$modelAD->attributes = $paramsQueryPostModel;
+	//важный фактор только после этой конструкции форма $form начинает обрабатывать ошибки
+	$isValidate = $modelAD->validate();
+}
+
 //если добавил файл или файлы,все остальные действия перекладываем на плагин и модель
-if($this->dicturls['action']!='edit') {
+if($isValidate && $this->dicturls['action']!='edit') {
 	$files = CUploadedFile::getInstancesByName(get_class($modelAD).'[fileAdd]');
 	if($files) {
 		/* ФАЙЛ */
@@ -17,21 +24,18 @@ if($this->dicturls['action']!='edit') {
 				$indexEdit = $modelAD->indexEdit;
 			}
 			else {
-				$indexEdit = '';//взять последний
+				$indexEdit = count($modelAD->get_EArray('content_file_array'))-1;
 			}
 			/* НОВЫЙ ФАЙЛ */
 			if(count($files)==1) {
-				$modelAD::$thiObjFile->file = $files[0];
+				$modelAD::$thiObjFile->setFile($files[0],$indexEdit);
 			}
 			/* ИМЯ ФАЙЛА */
 			if($this->nameFile!='' || $this->is_randName) {
 				static::$thiObjFile->setName('sdfsf', $indexEdit);
 			}
-
-
 		}
 	}
 }
 
-$modelAD->indexEdit = 34543;
 

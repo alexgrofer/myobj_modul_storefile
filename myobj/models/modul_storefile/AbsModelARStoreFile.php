@@ -58,17 +58,20 @@ class AbsModelARStoreFile extends AbsModel
 		parent::beforeDelete();
 		//плагин в файле знает что делать дальше в методе del
 		static::$thiObjFile->del();
-		return true;
 	}
 
 	protected function beforeSave() {
 		if(parent::beforeSave()!==false) {
-			echo $this->indexEdit;
-			exit;
 			static::$thiObjFile->save();
-			return true;
 		}
 		else return parent::beforeSave();
+	}
+
+	protected function beforeValidate()
+	{
+		//кастомно может поменять правила проверки для модели
+		static::$thiObjFile->plugin->validateModel();
+		return parent::beforeValidate();
 	}
 
 	public function customRules() {
