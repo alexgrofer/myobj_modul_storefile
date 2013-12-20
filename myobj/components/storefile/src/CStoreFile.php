@@ -7,17 +7,15 @@ class CStoreFile extends AbsCStoreFile {
 	/**
 	 * @var Объект модели
 	 */
-	protected $_objAr;
 
-	public function __construct($objPlugin,$arObj) {
+	public function __construct($objPlugin) {
 		$this->objPlugin = $objPlugin;
-		$this->_objAr = $arObj;
 	}
 	/**
 	 * Сохранить файл в базе и на сервере (может работать через сокет если это описано в плагине)
 	 */
 	public function save() {
-		$this->objPlugin->save($this->_objAr);
+		$this->objPlugin->save();
 	}
 
 	/**
@@ -28,6 +26,6 @@ class CStoreFile extends AbsCStoreFile {
 		if($key) {
 			unset($this->_realArrayConfObj[$key]);
 		}
-		$this->objPlugin->del($this->_objAr);
+		$this->objPlugin->del();
 	}
 }

@@ -3,16 +3,20 @@ final class DefaultPluginStoreFile extends AbsPluginStoreFile implements IPlugin
 {
 	const PATH_LOAD = 'media/upload/storefile'; //главная дирректория плагина, не можем изменять
 	const MODEL_AR = 'ModelARStoreFile'; //модель в которой хранятся хранится файлы
+	const COL_NAME_FILE_AR = 'content_file_array';
 
 	//обязательный метод определит название класса файла возвращаемый плагином
 	public function getClassFileName() {
 		return 'CStoreFile';
 	}
 
+	public $arObj; //объект yii AR которым будет управлять плагин
 	public function buildStoreFile($ARObj) {
 		//создать объект файла
 		$nameClassStoreFile = $this->getClassFileName();
-		$objStoreFile = new $nameClassStoreFile($this,$ARObj);
+		$cloneFilter = clone $this;
+		$cloneFilter->arObj = $ARObj;
+		$objStoreFile = new $nameClassStoreFile($cloneFilter);
 		return $objStoreFile;
 	}
 
@@ -57,5 +61,9 @@ final class DefaultPluginStoreFile extends AbsPluginStoreFile implements IPlugin
 	//кастомно определяет правила валидации для текушей модели файла
 	public function validateModel() {
 
+	}
+	//индекс следующего нового элемента
+	public function getNextIndex() {
+		return count($this->arObj->get_EArray(self::COL_NAME_FILE_AR))-1;
 	}
 }

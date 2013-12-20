@@ -14,7 +14,7 @@ if((isset($isValidate) && $isValidate) && $this->dicturls['action']=='edit') {
 	$files = CUploadedFile::getInstancesByName(get_class($modelAD).'[fileAdd]');
 	if($files) {
 		/* ФАЙЛ */
-		//если хочет добавить еще один файл или файлы
+		//если хочет добавить еще файлы
 		if($modelAD->indexEdit=='' && count($files)>1) {
 			$modelAD::$thiObjFile->filesMany = $files;
 		}
@@ -24,21 +24,19 @@ if((isset($isValidate) && $isValidate) && $this->dicturls['action']=='edit') {
 				$indexEdit = $modelAD->indexEdit;
 			}
 			else {
-				$indexEdit = count($modelAD->get_EArray('content_file_array'))-1;
+				$indexEdit = $modelAD::$thiObjFile->objPlugin->getNextIndex();
 			}
-			/* НОВЫЙ ФАЙЛ */
-			if(count($files)==1) {
-				$modelAD::$thiObjFile->setFile($files[0],$indexEdit);
-			}
+			/* ФАЙЛ */
+			$modelAD::$thiObjFile->setFile($files[0],$indexEdit);
 			/* ИМЯ ФАЙЛА */
-			if($modelAD->nameFile!='' || $modelAD->is_randName) {
-				static::$thiObjFile->setName('sdfsf', $indexEdit);
+			if($modelAD->is_randName) {
+				static::$thiObjFile->is($indexEdit);
+			}
+			elseif($modelAD->nameFile!='') {
+				static::$thiObjFile->setName($indexEdit);
 			}
 		}
 	}
-	echo 8;
-	exit;
-	$this->redirect($this->getUrlBeforeAction());
 }
 
 

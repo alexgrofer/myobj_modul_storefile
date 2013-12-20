@@ -11,8 +11,8 @@ class AbsModelARStoreFile extends AbsModel
 	//schema
 	//тут хранится файл-лы
 	public $content_file_array;
-	//дата загрузки
-	public $loadDate;
+	//дата создания
+	public $createDate;
 	/* Имет значение когда будет отдельnная строка для каждого файла, ONE когда нужно более 10 файлов
 	public $sort;
 	public $size;
@@ -76,6 +76,10 @@ class AbsModelARStoreFile extends AbsModel
 		return array(
 			array('content_file_array', 'required'),
 			array('indexEdit', 'numerical', 'integerOnly'=>true),
+			array('createDate', 'default',
+				'value'=>new CDbExpression('NOW()'),
+				'on'=>'insert', //еще бывают update,search http://www.yiiframework.com/wiki/266/understanding-scenarios
+			)
 		);
 	}
 
