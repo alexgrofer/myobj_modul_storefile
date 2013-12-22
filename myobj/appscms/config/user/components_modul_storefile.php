@@ -4,7 +4,7 @@ $components_user = array(
 		'class' =>'MYOBJ.components.storefile.CCStoreFile',
 		'test8'=>'texttest'
 	),
-	'file'=>array(
+	'istFile'=>array(
 		'class' =>'ext.ist-yii-cfile.CFile',
 	),
 );

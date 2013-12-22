@@ -50,9 +50,7 @@ final class DefaultPluginStoreFile extends AbsPluginStoreFile implements IPlugin
 
 	//описывает что делать с объектом при сохранении
 	public function save($objFile) {
-		echo 555;
-		print_r($objFile->getIsRandMany());
-		exit;
+
 	}
 
 	//описывает что делать с объектом при удалении
