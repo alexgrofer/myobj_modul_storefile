@@ -50,7 +50,24 @@ final class DefaultPluginStoreFile extends AbsPluginStoreFile implements IPlugin
 
 	//описывает что делать с объектом при сохранении
 	public function save($objFile) {
+		//сам объект $objFile->objPlugin->arObj - возможно нужно поменять значения earray перед сохранением
+		//управляющий плагин (сконфигурированный) $objFile->objPlugin
 
+		//1)Если добавил пачкой
+		print_r($objFile->FilesMany);
+
+		//если установил всем рандомное название всем рандомное название
+
+		//если не ставил рандомное сохраняем с теми же названиями
+
+		//ФАЙЛЫ с индексами пройти по _realArrayConfObj
+		//причем когда редактирует в ручную возможно в этом массиве будет не только один элемент
+
+		//создание миниатюр и т.д - вызвать спец метод именно плагина realty
+
+		//сохранение изменений в earray
+
+		exit;
 	}
 
 	//описывает что делать с объектом при удалении
@@ -60,8 +77,11 @@ final class DefaultPluginStoreFile extends AbsPluginStoreFile implements IPlugin
 
 	//кастомно определяет правила валидации для текушей модели файла
 	public function validateModel() {
-
+		//можно установить максимумы размеров например
 	}
+
+	//методы помошники рандомы, кропы, архивация
+
 	//индекс следующего нового элемента
 	public function getNextIndex() {
 		return count($this->arObj->get_EArray(self::COL_NAME_FILE_AR));

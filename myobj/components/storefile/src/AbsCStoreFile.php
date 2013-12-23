@@ -17,16 +17,16 @@ abstract class AbsCStoreFile extends CComponent {
 		return $this->_id;
 	}
 
-	private $_realArrayConfObj=array();
+	public $realArrayConfObj=array();
 
 	protected function _getDefParam($name,$key) {
-		return (isset($this->_realArrayConfObj[$key]) && isset($this->_realArrayConfObj[$key][$name]))?
-			$this->_realArrayConfObj[$key][$name]
+		return (isset($this->realArrayConfObj[$key]) && isset($this->realArrayConfObj[$key][$name]))?
+			$this->realArrayConfObj[$key][$name]
 			:
 			null;
 	}
 	protected function _setDefParam($name,$key,$val) {
-		$this->_realArrayConfObj[$key][$name] = $val;
+		$this->realArrayConfObj[$key][$name] = $val;
 	}
 
 	//признак что файлы будут сохранятся с рандомными названиями MANY
