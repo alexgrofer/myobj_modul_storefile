@@ -1,6 +1,6 @@
 <?php
 $objPlugin = new $modelAD->namePluginLoader();
-$modelAD::$thiObjFile = yii::app()->storeFile->obj($objPlugin,$modelAD);
+$modelAD->thiObjFile = yii::app()->storeFile->obj($objPlugin,$modelAD);
 
 $paramsQueryPostModel = yii::app()->getRequest()->getPost(get_class($modelAD));
 if($paramsQueryPostModel) {
@@ -11,7 +11,7 @@ if($paramsQueryPostModel) {
 
 //можно удалять отдельные элементы
 if($modelAD->is_del && $modelAD->indexEdit!='') {
-	static::$thiObjFile->del($modelAD->indexEdit);
+	$modelAD->thiObjFile->del($modelAD->indexEdit);
 }
 //если добавил файл или файлы,все остальные действия перекладываем на плагин и модель
 if((isset($isValidate) && $isValidate) && $this->dicturls['action']=='edit') {
@@ -20,10 +20,10 @@ if((isset($isValidate) && $isValidate) && $this->dicturls['action']=='edit') {
 	//заливка множества файлов
 	if(count($files)>1) {
 		/* ФАЙЛЫ */
-		$modelAD::$thiObjFile->filesMany = $files;
+		$modelAD->thiObjFile->filesMany = $files;
 		/* РАНДОМНЫЕ ИМЕНА */
 		if($modelAD->is_randName) {
-			$modelAD::$thiObjFile->isRandMany = true;
+			$modelAD->thiObjFile->isRandMany = true;
 		}
 		/* ... */
 	}
@@ -33,18 +33,18 @@ if((isset($isValidate) && $isValidate) && $this->dicturls['action']=='edit') {
 			$indexEdit = $modelAD->indexEdit;
 		}
 		else {
-			$indexEdit = $modelAD::$thiObjFile->objPlugin->getNextIndex();
+			$indexEdit = $modelAD->thiObjFile->objPlugin->getNextIndex();
 		}
 		/* ФАЙЛ */
 		if($files) {
-			$modelAD::$thiObjFile->setFile($files[0],$indexEdit);
+			$modelAD->thiObjFile->setFile($files[0],$indexEdit);
 		}
 		/* ИМЯ ФАЙЛА */
 		if($modelAD->is_randName) {
-			$modelAD::$thiObjFile->is($indexEdit);
+			$modelAD->thiObjFile->is($indexEdit);
 		}
 		elseif($modelAD->nameFile!='') {
-			$modelAD::$thiObjFile->setName($indexEdit);
+			$modelAD->thiObjFile->setName($indexEdit);
 		}
 		/* ... */
 	}

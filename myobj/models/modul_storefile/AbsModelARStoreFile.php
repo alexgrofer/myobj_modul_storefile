@@ -55,22 +55,22 @@ class AbsModelARStoreFile extends AbsModel
 	public $namePluginLoader;
 
 	//тут файл
-	public static $thiObjFile;
+	public $thiObjFile;
 	protected function beforeDelete() {
 		//плагин в файле знает что делать дальше в методе del
-		static::$thiObjFile->del();
+		$this->thiObjFile->del();
 		return parent::beforeDelete();
 	}
 
 	protected function beforeSave() {
-		static::$thiObjFile->save();
+		$this->thiObjFile->save();
 		return parent::beforeSave();
 	}
 
 	protected function beforeValidate()
 	{
 		//кастомно может поменять правила проверки для модели
-		static::$thiObjFile->objPlugin->validateModel();
+		$this->thiObjFile->objPlugin->validateModel();
 		return parent::beforeValidate();
 	}
 
