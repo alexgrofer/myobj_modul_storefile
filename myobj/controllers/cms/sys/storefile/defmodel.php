@@ -41,17 +41,17 @@ if((isset($isValidate) && $isValidate) && $this->dicturls['action']=='edit') {
 		}
 		/* ИМЯ ФАЙЛА */
 		if($modelAD->is_randName) {
-			static::$thiObjFile->is($indexEdit);
+			$modelAD::$thiObjFile->is($indexEdit);
 		}
 		elseif($modelAD->nameFile!='') {
-			static::$thiObjFile->setName($indexEdit);
+			$modelAD::$thiObjFile->setName($indexEdit);
 		}
 		/* ... */
 	}
 
-	static::$thiObjFile->save();
-
-	$this->redirect(Yii::app()->request->url);
 }
+/*
+ * продолжиться дальнейшее исполнение obj.php контроллера который вызовет метод save
+ */
 
 
