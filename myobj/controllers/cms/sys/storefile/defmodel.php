@@ -37,14 +37,14 @@ if((isset($isValidate) && $isValidate) && $this->dicturls['action']=='edit') {
 		}
 		/* ФАЙЛ */
 		if($files) {
-			$modelAD->thiObjFile->setFile($files[0],$indexEdit);
+			$modelAD->thiObjFile->set_File($files[0],$indexEdit);
 		}
 		/* ИМЯ ФАЙЛА */
 		if($modelAD->is_randName) {
-			$modelAD->thiObjFile->IsRand($indexEdit);
+			$modelAD->thiObjFile->set_IsRand(true,$indexEdit);
 		}
 		elseif($modelAD->nameFile!='') {
-			$modelAD->thiObjFile->setName($indexEdit);
+			$modelAD->thiObjFile->set_Name($modelAD->nameFile,$indexEdit);
 		}
 		/* ... */
 	}

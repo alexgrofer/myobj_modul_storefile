@@ -48,84 +48,53 @@ abstract class AbsCStoreFile extends CComponent {
 	//end custom methods
 
 	//установить новое название для файла
-	public function set_name($name,$key=0) {
+	public function set_Name($name,$key) {
 		$this->_setDefParam('name',$key,$name);
 	}
-	public function get_name($key) {
+	public function get_Name($key) {
 		return $this->_getDefParam('name',$key);
 	}
-	public function setName($name) {
-		$this->set_name($name,0);
-	}
-	public function getName() {
-		return $this->get_name(0);
-	}
+
 	//установить описание для файла
-	public function set_title($title,$key=0) {
+	public function set_Title($title,$key) {
 		$this->_setDefParam('title',$key,$title);
 	}
-	public function get_title($key) {
+	public function get_Title($key) {
 		return $this->_getDefParam('title',$key);
 	}
-	public function setTitle($title) {
-		$this->set_title($title,0);
-	}
-	public function getTitle() {
-		return $this->get_title(0);
-	}
+
 	//относительный путь в файлу
-	public function set_path($path,$key=0) {
+	public function set_Path($path,$key) {
 		$this->_setDefParam('path',$key,$path);
 	}
-	public function get_path($key) {
+	public function get_Path($key) {
 		return $this->_getDefParam('path',$key);
 	}
-	public function setPath($path) {
-		$this->set_path($path,0);
-	}
-	public function getPath() {
-		return $this->get_path(0);
-	}
+
 	//сортировка файлов
-	public function set_sort($sort,$key=0) {
+	public function set_Sort($sort,$key) {
 		$this->_setDefParam('sort',$key,$sort);
 	}
-	public function get_sort($key) {
+	public function get_Sort($key) {
 		return $this->_getDefParam('sort',$key);
-	}
-	public function setSort($sort) {
-		$this->set_sort($sort,0);
-	}
-	public function getSort() {
-		return $this->get_sort(0);
 	}
 
 	//not real это не сохранятся только для признака что делать с файлом
 	//установить новый файл
-	public function set_file($path,$key=0) {
+	public function set_File(CUploadedFile $path,$key) {
 		$this->_setDefParam('file',$key,$path);
 	}
-	public function get_file($key) {
+	public function get_File($key) {
 		return $this->_getDefParam('file',$key);
 	}
-	public function setFile($path) {
-		$this->set_file($path,0);
-	}
-	public function getFile() {
-		return $this->get_file(0);
-	}
+
 	//установить новое название для файла
-	public function set_isRand($bool,$key=0) {
+	public function set_IsRand($bool,$key) {
 		$this->_setDefParam('rand',$key,$bool);
 	}
-	public function get_isRand($key) {
+	public function get_IsRand($key) {
 		return $this->_getDefParam('rand',$key);
 	}
-	public function setIsRand($bool) {
-		$this->set_isRand($bool,0);
-	}
-	public function getIsRand() {
-		return $this->get_isRand(0);
-	}
+
 	//end not real
 }

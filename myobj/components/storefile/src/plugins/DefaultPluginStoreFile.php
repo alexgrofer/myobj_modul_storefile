@@ -62,8 +62,8 @@ final class DefaultPluginStoreFile extends AbsPluginStoreFile implements IPlugin
 				/* @var CUploadedFile $fileUploader */
 				/* @var CFile $loadFile */
 				$loadFile = Yii::app()->CFile->set($fileUploader->tempName, true);
-				$newNameFile = ($objFile->isRand)?
-					self::randName(self::COUNT_SING_RAND_NAME).CFileHelper::getExtension($fileUploader->name)
+				$newNameFile = ($objFile->isRandMany)?
+					self::randName(self::COUNT_SING_RAND_NAME).'.'.CFileHelper::getExtension($fileUploader->name)
 						:
 					$fileUploader->name;
 				$loadFile->move(self::PATH_LOAD.DIRECTORY_SEPARATOR.$newNameFile);
