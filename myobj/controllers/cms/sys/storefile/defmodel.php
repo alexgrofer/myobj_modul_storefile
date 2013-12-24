@@ -41,7 +41,7 @@ if((isset($isValidate) && $isValidate) && $this->dicturls['action']=='edit') {
 		}
 		/* ИМЯ ФАЙЛА */
 		if($modelAD->is_randName) {
-			$modelAD->thiObjFile->is($indexEdit);
+			$modelAD->thiObjFile->IsRand($indexEdit);
 		}
 		elseif($modelAD->nameFile!='') {
 			$modelAD->thiObjFile->setName($indexEdit);
