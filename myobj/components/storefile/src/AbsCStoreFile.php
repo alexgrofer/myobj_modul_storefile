@@ -29,24 +29,6 @@ abstract class AbsCStoreFile extends CComponent {
 		$this->realArrayConfObj[$key][$name] = $val;
 	}
 
-	//признак что файлы будут сохранятся с рандомными названиями MANY
-	private $_isRandMany;
-	public function setIsRandMany($bool) {
-		$this->_isRandMany = $bool;
-	}
-	public function getIsRandMany() {
-		return $this->_isRandMany;
-	}
-	//добавить множество файлов MANY
-	private $_filesMany;
-	public function setFilesMany($arrayPath) {
-		$this->_filesMany = $arrayPath;
-	}
-	public function getFilesMany() {
-		return ($this->_filesMany)?$this->_filesMany:array();
-	}
-	//end custom methods
-
 	//установить новое название для файла
 	public function set_Name($name,$key) {
 		$this->_setDefParam('name',$key,$name);
@@ -95,6 +77,8 @@ abstract class AbsCStoreFile extends CComponent {
 	public function get_IsRand($key) {
 		return $this->_getDefParam('rand',$key);
 	}
+
+	//+остальные необходимые методы, допустимы также в классе наследнике
 
 	//end not real
 }

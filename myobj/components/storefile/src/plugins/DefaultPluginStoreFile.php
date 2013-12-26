@@ -56,16 +56,15 @@ final class DefaultPluginStoreFile extends AbsPluginStoreFile implements IPlugin
 
 		//1)Если добавил пачкой
 		/* @var CStoreFile $objFile */
-		if($objFile->FilesMany) {
-			//начинаем сохранять файлы по одному
-			foreach($objFile->FilesMany as $fileUploader) {
-				/* @var CUploadedFile $fileUploader */
-				/* @var CFile $loadFile */
-				$loadFile = Yii::app()->CFile->set($fileUploader->tempName, true);
-				$newNameFile = ($objFile->isRandMany)?
-					self::randName(self::COUNT_SING_RAND_NAME).'.'.CFileHelper::getExtension($fileUploader->name)
-						:
-					$fileUploader->name;
+
+		foreach($objFile->realArrayConfObj as $keyFile => $newSetting) {
+			if(isset($newSetting['file'])) {
+				$newFileUploader = $newSetting['file'];
+				$loadFile = Yii::app()->CFile->set($newFileUploader->tempName, true);
+				$newNameFile = (isset($newSetting['rand']))?
+					self::randName(self::COUNT_SING_RAND_NAME).'.'.CFileHelper::getExtension($newFileUploader->name)
+					:
+					$newFileUploader->name;
 				$loadFile->move(self::PATH_LOAD.DIRECTORY_SEPARATOR.$newNameFile);
 			}
 		}

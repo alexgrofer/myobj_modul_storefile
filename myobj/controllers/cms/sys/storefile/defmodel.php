@@ -17,28 +17,16 @@ if($modelAD->is_del && $modelAD->indexEdit!='') {
 if((isset($isValidate) && $isValidate) && $this->dicturls['action']=='edit') {
 	$files = CUploadedFile::getInstancesByName(get_class($modelAD).'[fileAdd]');
 
-	//заливка множества файлов
-	if(count($files)>1) {
-		/* ФАЙЛЫ */
-		$modelAD->thiObjFile->filesMany = $files;
-		/* РАНДОМНЫЕ ИМЕНА */
-		if($modelAD->is_randName) {
-			$modelAD->thiObjFile->isRandMany = true;
-		}
-		/* ... */
+	if($modelAD->indexEdit!='') {
+		$indexEdit = $modelAD->indexEdit;
 	}
-	//в случае с отдельным файлом или редактировании отдельного элемента
 	else {
-		if($modelAD->indexEdit!='') {
-			$indexEdit = $modelAD->indexEdit;
-		}
-		else {
-			$indexEdit = $modelAD->thiObjFile->objPlugin->getNextIndex();
-		}
+		$indexEdit = $modelAD->thiObjFile->objPlugin->getNextIndex();
+	}
+
+	foreach($files as $file) {
 		/* ФАЙЛ */
-		if($files) {
-			$modelAD->thiObjFile->set_File($files[0],$indexEdit);
-		}
+		$modelAD->thiObjFile->set_File($file,$indexEdit);
 		/* ИМЯ ФАЙЛА */
 		if($modelAD->is_randName) {
 			$modelAD->thiObjFile->set_IsRand(true,$indexEdit);
@@ -46,7 +34,8 @@ if((isset($isValidate) && $isValidate) && $this->dicturls['action']=='edit') {
 		elseif($modelAD->nameFile!='') {
 			$modelAD->thiObjFile->set_Name($modelAD->nameFile,$indexEdit);
 		}
-		/* ... */
+
+		$indexEdit++;
 	}
 
 }
