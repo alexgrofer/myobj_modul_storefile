@@ -58,6 +58,7 @@ final class DefaultPluginStoreFile extends AbsPluginStoreFile implements IPlugin
 		/* @var CStoreFile $objFile */
 
 		foreach($objFile->realArrayConfObj as $keyFile => $newSetting) {
+			//загружаем новый файл
 			if(isset($newSetting['file'])) {
 				$newFileUploader = $newSetting['file'];
 				$loadFile = Yii::app()->CFile->set($newFileUploader->tempName, true);
@@ -66,6 +67,23 @@ final class DefaultPluginStoreFile extends AbsPluginStoreFile implements IPlugin
 					:
 					$newFileUploader->name;
 				$loadFile->move(self::PATH_LOAD.DIRECTORY_SEPARATOR.$newNameFile);
+				//изменить earray
+			}
+			//просто хочет переименовать файл
+			elseif(isset($newSetting['rand']) || isset($newSetting['name'])) {
+				$newNameFile = (isset($newSetting['rand']))?self::randName(self::COUNT_SING_RAND_NAME):$newSetting['name'];
+				//так можно получить имя оригинального файла
+				$loadFile = Yii::app()->CFile->set(self::PATH_LOAD.DIRECTORY_SEPARATOR.$objFile->get_File($keyFile), true);
+				$loadFile->rename(self::PATH_LOAD.DIRECTORY_SEPARATOR.$newNameFile);
+				//изменить earray
+			}
+			//меняем сортировку
+			if(isset($newSetting['rand'])) {
+				//изменить earray
+			}
+			//меняем заголовок
+			if(isset($newSetting['title'])) {
+				//изменить earray
 			}
 		}
 

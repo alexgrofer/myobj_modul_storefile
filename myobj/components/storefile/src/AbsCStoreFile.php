@@ -29,7 +29,7 @@ abstract class AbsCStoreFile extends CComponent {
 		$this->realArrayConfObj[$key][$name] = $val;
 	}
 
-	//установить новое название для файла
+	//относительный путь к файлу
 	public function set_Name($name,$key) {
 		$this->_setDefParam('name',$key,$name);
 	}
@@ -43,14 +43,6 @@ abstract class AbsCStoreFile extends CComponent {
 	}
 	public function get_Title($key) {
 		return $this->_getDefParam('title',$key);
-	}
-
-	//относительный путь в файлу
-	public function set_Path($path,$key) {
-		$this->_setDefParam('path',$key,$path);
-	}
-	public function get_Path($key) {
-		return $this->_getDefParam('path',$key);
 	}
 
 	//сортировка файлов
