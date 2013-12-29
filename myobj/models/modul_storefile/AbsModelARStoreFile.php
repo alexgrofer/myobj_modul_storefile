@@ -76,7 +76,7 @@ class AbsModelARStoreFile extends AbsModel
 
 	public function customRules() {
 		return array(
-			array('content_file_array', 'required'),
+			array('content_file_array', 'safe'),
 			array('indexEdit', 'numerical', 'integerOnly'=>true),
 			array('createDate', 'default',
 				'value'=>new CDbExpression('NOW()'),

@@ -37,6 +37,13 @@ abstract class AbsCStoreFile extends CComponent {
 		return $this->_getDefParam('name',$key);
 	}
 
+	public function set_Path($title,$key) {
+		$this->_setDefParam('path',$key,$title);
+	}
+	public function get_Path($key) {
+		return $this->_getDefParam('path',$key);
+	}
+
 	//установить описание для файла
 	public function set_Title($title,$key) {
 		$this->_setDefParam('title',$key,$title);

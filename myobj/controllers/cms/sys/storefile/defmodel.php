@@ -24,6 +24,10 @@ if((isset($isValidate) && $isValidate) && $this->dicturls['action']=='edit') {
 		$indexEdit = $modelAD->thiObjFile->objPlugin->getNextIndex();
 	}
 
+	if($modelAD->nameFile) {
+		$modelAD->thiObjFile->set_Name($modelAD->nameFile,$indexEdit);
+	}
+
 	foreach($files as $file) {
 		/* ФАЙЛ */
 		$modelAD->thiObjFile->set_File($file,$indexEdit);
@@ -39,10 +43,6 @@ if((isset($isValidate) && $isValidate) && $this->dicturls['action']=='edit') {
 	}
 
 	//изменение информации
-	//сортировка
-	if($modelAD->nameFile) {
-
-	}
 	if($modelAD->title) {
 		$modelAD->thiObjFile->set_Title($modelAD->title,$indexEdit);
 	}
@@ -50,8 +50,10 @@ if((isset($isValidate) && $isValidate) && $this->dicturls['action']=='edit') {
 		$modelAD->thiObjFile->set_Sort($modelAD->file_sort,$indexEdit);
 	}
 	if($modelAD->path) {
-
+		$modelAD->thiObjFile->set_Path($modelAD->path,$indexEdit);
 	}
+
+	//и д.р
 
 }
 /*

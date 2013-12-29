@@ -87,7 +87,7 @@ final class DefaultPluginStoreFile extends AbsPluginStoreFile implements IPlugin
 
 			}
 			//просто хочет переименовать существующий файл , изменить путь
-			elseif(isset($newSetting['rand']) || isset($newSetting['name']) || isset($newSetting['path'])) {
+			elseif(isset($newSetting['rand']) || isset($newSetting['name'])) {
 				$newNameFile = (isset($newSetting['rand']))?self::randName(self::COUNT_SING_RAND_NAME):$newSetting['name'];
 
 				$oldNameFile = $this->arObj->get_EArray(self::COL_NAME_FILE_AR, 'name', $keyFile, true);
