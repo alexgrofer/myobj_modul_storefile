@@ -69,21 +69,23 @@ final class DefaultPluginStoreFile extends AbsPluginStoreFile implements IPlugin
 				$loadFile->move(self::PATH_LOAD.DIRECTORY_SEPARATOR.$newNameFile);
 				//изменить earray
 			}
-			//просто хочет переименовать файл
+			//просто хочет переименовать существующий файл
 			elseif(isset($newSetting['rand']) || isset($newSetting['name'])) {
 				$newNameFile = (isset($newSetting['rand']))?self::randName(self::COUNT_SING_RAND_NAME):$newSetting['name'];
-				//так можно получить имя оригинального файла
-				$loadFile = Yii::app()->CFile->set(self::PATH_LOAD.DIRECTORY_SEPARATOR.$objFile->get_File($keyFile), true);
+				//так можно получить имя файла
+				$oldNameFile = $this->arObj->get_EArray(self::COL_NAME_FILE_AR, 'name', $keyFile);
+				$loadFile = Yii::app()->CFile->set(self::PATH_LOAD.DIRECTORY_SEPARATOR.$objFile->get_Name($oldNameFile), true);
 				$loadFile->rename(self::PATH_LOAD.DIRECTORY_SEPARATOR.$newNameFile);
 				//изменить earray
 			}
-			//меняем сортировку
-			if(isset($newSetting['rand'])) {
-				//изменить earray
-			}
-			//меняем заголовок
 			if(isset($newSetting['title'])) {
 				//изменить earray
+				$this->arObj->edit_EArray($newSetting['title'],self::COL_NAME_FILE_AR,'title',$keyFile);
+			}
+
+			if(isset($newSetting['sort'])) {
+				//изменить earray
+				$this->arObj->edit_EArray($newSetting['sort'],self::COL_NAME_FILE_AR,'sort',$keyFile);
 			}
 		}
 
@@ -98,7 +100,7 @@ final class DefaultPluginStoreFile extends AbsPluginStoreFile implements IPlugin
 
 		//сохранение изменений в earray
 
-		exit;
+		//exit;
 	}
 
 	//описывает что делать с объектом при удалении
