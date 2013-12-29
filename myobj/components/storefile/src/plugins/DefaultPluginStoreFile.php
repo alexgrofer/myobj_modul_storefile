@@ -69,15 +69,37 @@ final class DefaultPluginStoreFile extends AbsPluginStoreFile implements IPlugin
 				$loadFile->move(self::PATH_LOAD.DIRECTORY_SEPARATOR.$newNameFile);
 				//изменить earray
 			}
-			//просто хочет переименовать существующий файл
-			elseif(isset($newSetting['rand']) || isset($newSetting['name'])) {
+			//просто хочет переименовать существующий файл , изменить путь
+			elseif(isset($newSetting['rand']) || isset($newSetting['name']) || isset($newSetting['path'])) {
 				$newNameFile = (isset($newSetting['rand']))?self::randName(self::COUNT_SING_RAND_NAME):$newSetting['name'];
 				//так можно получить имя файла
-				$oldNameFile = $this->arObj->get_EArray(self::COL_NAME_FILE_AR, 'name', $keyFile);
-				$loadFile = Yii::app()->CFile->set(self::PATH_LOAD.DIRECTORY_SEPARATOR.$objFile->get_Name($oldNameFile), true);
-				$loadFile->rename(self::PATH_LOAD.DIRECTORY_SEPARATOR.$newNameFile);
-				//изменить earray
+				$oldNameFile = $this->arObj->get_EArray(self::COL_NAME_FILE_AR, 'name', $keyFile, true);
+
+				$userPathFile = '';
+				$oldPathFile = $this->arObj->get_EArray(self::COL_NAME_FILE_AR, 'path', $keyFile, true);
+				if($oldPathFile) {
+					$oldPathFile .= DIRECTORY_SEPARATOR;
+					$userPathFile = $oldPathFile;
+				}
+
+				if(isset($newSetting['path'])) {
+					$userPathFile = $newSetting['path'].DIRECTORY_SEPARATOR;
+				}
+
+				$loadFile = Yii::app()->CFile->set(self::PATH_LOAD.DIRECTORY_SEPARATOR.$oldPathFile.$objFile->get_Name($oldNameFile), true);
+				$loadFile->rename(self::PATH_LOAD.DIRECTORY_SEPARATOR.$userPathFile.$newNameFile);
 			}
+
+			if(isset($newSetting['name'])) {
+				//изменить earray
+				$this->arObj->edit_EArray($newSetting['name'],self::COL_NAME_FILE_AR,'name',$keyFile);
+			}
+
+			if(isset($newSetting['path'])) {
+				//изменить earray
+				$this->arObj->edit_EArray($newSetting['path'],self::COL_NAME_FILE_AR,'path',$keyFile);
+			}
+
 			if(isset($newSetting['title'])) {
 				//изменить earray
 				$this->arObj->edit_EArray($newSetting['title'],self::COL_NAME_FILE_AR,'title',$keyFile);

@@ -38,6 +38,21 @@ if((isset($isValidate) && $isValidate) && $this->dicturls['action']=='edit') {
 		$indexEdit++;
 	}
 
+	//изменение информации
+	//сортировка
+	if($modelAD->nameFile) {
+
+	}
+	if($modelAD->title) {
+		$modelAD->thiObjFile->set_Title($modelAD->title,$indexEdit);
+	}
+	if($modelAD->file_sort) {
+		$modelAD->thiObjFile->set_Sort($modelAD->file_sort,$indexEdit);
+	}
+	if($modelAD->path) {
+
+	}
+
 }
 /*
  * продолжиться дальнейшее исполнение obj.php контроллера который вызовет метод save
