@@ -58,71 +58,52 @@ final class DefaultPluginStoreFile extends AbsPluginStoreFile implements IPlugin
 		/* @var CStoreFile $objFile */
 
 		foreach($objFile->realArrayConfObj as $keyFile => $newSetting) {
-			//загружаем новый файл
+			//DATA EDIT
+
+			$userPathFile = '';
+			if(isset($newSetting['path'])) {
+				//изменить earray
+				$this->arObj->edit_EArray($newSetting['path'],self::COL_NAME_FILE_AR,'path',$keyFile);
+				$userPathFile = $newSetting['path'].DIRECTORY_SEPARATOR;
+			}
+
+			if(isset($newSetting['title'])) {
+				$this->arObj->edit_EArray($newSetting['title'],self::COL_NAME_FILE_AR,'title',$keyFile);
+			}
+
+			if(isset($newSetting['sort'])) {
+				$this->arObj->edit_EArray($newSetting['sort'],self::COL_NAME_FILE_AR,'sort',$keyFile);
+			}
+			//FILE EDIT
 			if(isset($newSetting['file'])) {
+
 				$newFileUploader = $newSetting['file'];
 				$loadFile = Yii::app()->CFile->set($newFileUploader->tempName, true);
 				$newNameFile = (isset($newSetting['rand']))?
 					self::randName(self::COUNT_SING_RAND_NAME).'.'.CFileHelper::getExtension($newFileUploader->name)
 					:
 					$newFileUploader->name;
-				$loadFile->move(self::PATH_LOAD.DIRECTORY_SEPARATOR.$newNameFile);
-				//изменить earray
+				$loadFile->move(self::PATH_LOAD.DIRECTORY_SEPARATOR.$userPathFile.$newNameFile);
+
 			}
 			//просто хочет переименовать существующий файл , изменить путь
 			elseif(isset($newSetting['rand']) || isset($newSetting['name']) || isset($newSetting['path'])) {
 				$newNameFile = (isset($newSetting['rand']))?self::randName(self::COUNT_SING_RAND_NAME):$newSetting['name'];
-				//так можно получить имя файла
+
 				$oldNameFile = $this->arObj->get_EArray(self::COL_NAME_FILE_AR, 'name', $keyFile, true);
-
-				$userPathFile = '';
 				$oldPathFile = $this->arObj->get_EArray(self::COL_NAME_FILE_AR, 'path', $keyFile, true);
-				if($oldPathFile) {
-					$oldPathFile .= DIRECTORY_SEPARATOR;
-					$userPathFile = $oldPathFile;
-				}
-
-				if(isset($newSetting['path'])) {
-					$userPathFile = $newSetting['path'].DIRECTORY_SEPARATOR;
-				}
 
 				$loadFile = Yii::app()->CFile->set(self::PATH_LOAD.DIRECTORY_SEPARATOR.$oldPathFile.$objFile->get_Name($oldNameFile), true);
 				$loadFile->rename(self::PATH_LOAD.DIRECTORY_SEPARATOR.$userPathFile.$newNameFile);
-			}
 
-			if(isset($newSetting['name'])) {
-				//изменить earray
-				$this->arObj->edit_EArray($newSetting['name'],self::COL_NAME_FILE_AR,'name',$keyFile);
 			}
-
-			if(isset($newSetting['path'])) {
-				//изменить earray
-				$this->arObj->edit_EArray($newSetting['path'],self::COL_NAME_FILE_AR,'path',$keyFile);
-			}
-
-			if(isset($newSetting['title'])) {
-				//изменить earray
-				$this->arObj->edit_EArray($newSetting['title'],self::COL_NAME_FILE_AR,'title',$keyFile);
-			}
-
-			if(isset($newSetting['sort'])) {
-				//изменить earray
-				$this->arObj->edit_EArray($newSetting['sort'],self::COL_NAME_FILE_AR,'sort',$keyFile);
+			//OBJ EDIT
+			if(isset($newNameFile)) {
+				$this->arObj->edit_EArray($newNameFile,self::COL_NAME_FILE_AR,'name',$keyFile);
 			}
 		}
 
-		//если установил всем рандомное название всем рандомное название
-
-		//если не ставил рандомное сохраняем с теми же названиями
-
-		//ФАЙЛЫ с индексами пройти по _realArrayConfObj
-		//причем когда редактирует в ручную возможно в этом массиве будет не только один элемент
-
 		//создание миниатюр и т.д - вызвать спец метод именно плагина realty
-
-		//сохранение изменений в earray
-
-		//exit;
 	}
 
 	//описывает что делать с объектом при удалении
