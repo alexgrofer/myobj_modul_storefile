@@ -15,10 +15,11 @@ final class DefaultPluginStoreFile extends AbsPluginStoreFile implements IPlugin
 	public function buildStoreFile($ARObj) {
 		//создать объект файла
 		$nameClassStoreFile = $this->getClassFileName();
-		$cloneFilter = clone $this;
-		$cloneFilter->arObj = $ARObj;
-		$objStoreFile = new $nameClassStoreFile($cloneFilter);
-		return $objStoreFile;
+		$clonePlugin = clone $this;
+		$objStoreFile = new $nameClassStoreFile($clonePlugin);
+		$clonePlugin->arObj = $ARObj;
+		$clonePlugin->arObj->thiObjFile = $objStoreFile;
+		return $clonePlugin->arObj->thiObjFile;
 	}
 
 	/**

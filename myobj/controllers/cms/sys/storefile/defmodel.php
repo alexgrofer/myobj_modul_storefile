@@ -1,6 +1,6 @@
 <?php
 $objPlugin = new $modelAD->namePluginLoader();
-$modelAD->thiObjFile = yii::app()->storeFile->obj($objPlugin,$modelAD);
+$objFile = yii::app()->storeFile->obj($objPlugin,$modelAD);
 
 $paramsQueryPostModel = yii::app()->getRequest()->getPost(get_class($modelAD));
 if($paramsQueryPostModel) {
@@ -11,7 +11,7 @@ if($paramsQueryPostModel) {
 
 //можно удалять отдельные элементы
 if($modelAD->is_del && $modelAD->indexEdit!='') {
-	$modelAD->thiObjFile->del($modelAD->indexEdit);
+	$objFile->del($modelAD->indexEdit);
 }
 //если добавил файл или файлы,все остальные действия перекладываем на плагин и модель
 if((isset($isValidate) && $isValidate) && $this->dicturls['action']=='edit') {
@@ -21,22 +21,22 @@ if((isset($isValidate) && $isValidate) && $this->dicturls['action']=='edit') {
 		$indexEdit = $modelAD->indexEdit;
 	}
 	else {
-		$indexEdit = $modelAD->thiObjFile->objPlugin->getNextIndex();
+		$indexEdit = $objFile->objPlugin->getNextIndex();
 	}
 
 	if($modelAD->nameFile) {
-		$modelAD->thiObjFile->set_Name($modelAD->nameFile,$indexEdit);
+		$objFile->set_Name($modelAD->nameFile,$indexEdit);
 	}
 
 	foreach($files as $file) {
 		/* ФАЙЛ */
-		$modelAD->thiObjFile->set_File($file,$indexEdit);
+		$objFile->set_File($file,$indexEdit);
 		/* ИМЯ ФАЙЛА */
 		if($modelAD->is_randName) {
-			$modelAD->thiObjFile->set_IsRand(true,$indexEdit);
+			$objFile->set_IsRand(true,$indexEdit);
 		}
 		elseif($modelAD->nameFile!='') {
-			$modelAD->thiObjFile->set_Name($modelAD->nameFile,$indexEdit);
+			$objFile->set_Name($modelAD->nameFile,$indexEdit);
 		}
 
 		$indexEdit++;
@@ -44,13 +44,13 @@ if((isset($isValidate) && $isValidate) && $this->dicturls['action']=='edit') {
 
 	//изменение информации
 	if($modelAD->title) {
-		$modelAD->thiObjFile->set_Title($modelAD->title,$indexEdit);
+		$objFile->set_Title($modelAD->title,$indexEdit);
 	}
 	if($modelAD->file_sort) {
-		$modelAD->thiObjFile->set_Sort($modelAD->file_sort,$indexEdit);
+		$objFile->set_Sort($modelAD->file_sort,$indexEdit);
 	}
 	if($modelAD->path) {
-		$modelAD->thiObjFile->set_Path($modelAD->path,$indexEdit);
+		$objFile->set_Path($modelAD->path,$indexEdit);
 	}
 
 	//и д.р
