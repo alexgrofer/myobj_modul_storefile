@@ -24,36 +24,39 @@ if((isset($isValidate) && $isValidate) && $this->dicturls['action']=='edit') {
 		$indexEdit = $objFile->objPlugin->getNextIndex();
 	}
 
-	if($modelAD->nameFile) {
-		$objFile->set_Name($modelAD->nameFile,$indexEdit);
-	}
-
-	foreach($files as $file) {
-		/* ФАЙЛ */
-		$objFile->set_File($file,$indexEdit);
-		/* ИМЯ ФАЙЛА */
+	$lambda_key = function($indexEdit) use($modelAD,$objFile) {
+		if($modelAD->nameFile) {
+			$objFile->set_Name($modelAD->nameFile,$indexEdit);
+		}
+		if($modelAD->title) {
+			$objFile->set_Title($modelAD->title,$indexEdit);
+		}
+		if($modelAD->file_sort) {
+			$objFile->set_Sort($modelAD->file_sort,$indexEdit);
+		}
+		if($modelAD->path) {
+			$objFile->set_Path($modelAD->path,$indexEdit);
+		}
 		if($modelAD->is_randName) {
 			$objFile->set_IsRand(true,$indexEdit);
 		}
 		elseif($modelAD->nameFile!='') {
 			$objFile->set_Name($modelAD->nameFile,$indexEdit);
 		}
+	};
 
-		$indexEdit++;
+	if(count($files)) {
+		foreach($files as $file) {
+			/* ФАЙЛ */
+			$objFile->set_File($file,$indexEdit);
+			/* ИМЯ ФАЙЛА */
+			$lambda_key($indexEdit);
+			$indexEdit++;
+		}
 	}
-
-	//изменение информации
-	if($modelAD->title) {
-		$objFile->set_Title($modelAD->title,$indexEdit);
+	else {
+		$lambda_key($indexEdit);
 	}
-	if($modelAD->file_sort) {
-		$objFile->set_Sort($modelAD->file_sort,$indexEdit);
-	}
-	if($modelAD->path) {
-		$objFile->set_Path($modelAD->path,$indexEdit);
-	}
-
-	//и д.р
 
 }
 /*
