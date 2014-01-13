@@ -84,6 +84,9 @@ final class DefaultPluginStoreFile extends AbsPluginStoreFile implements IPlugin
 					self::randName(self::COUNT_SING_RAND_NAME).'.'.CFileHelper::getExtension($newFileUploader->name)
 					:
 					$newFileUploader->name;
+				if($userPathFile) {
+					$loadFile->createDir(0754, self::PATH_LOAD.DIRECTORY_SEPARATOR.$userPathFile);
+				}
 				$loadFile->move(self::PATH_LOAD.DIRECTORY_SEPARATOR.$userPathFile.$newNameFile);
 
 			}
