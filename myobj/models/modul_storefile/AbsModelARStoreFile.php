@@ -118,6 +118,9 @@ class AbsModelARStoreFile extends AbsModel
 			'title'=>array(
 				'type'=>'textarea',
 			),
+			'file_sort'=>array(
+				'type'=>'text',
+			),
 			'path'=>array(
 				'type'=>'text',
 			),
