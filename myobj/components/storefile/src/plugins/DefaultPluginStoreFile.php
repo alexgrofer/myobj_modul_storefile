@@ -95,9 +95,12 @@ final class DefaultPluginStoreFile extends AbsPluginStoreFile implements IPlugin
 				$newNameFile = (isset($newSetting['rand']))?self::randName(self::COUNT_SING_RAND_NAME):$newSetting['name'];
 
 				$oldNameFile = $this->arObj->get_EArray(self::COL_NAME_FILE_AR, 'name', $keyFile, true);
-				$oldPathFile = $this->arObj->get_EArray(self::COL_NAME_FILE_AR, 'path', $keyFile, true);
+				$oldPathFile = '';
+				if($this->arObj->has_EArray(self::COL_NAME_FILE_AR, 'path', $keyFile, true)) {
+					$oldPathFile = $this->arObj->get_EArray(self::COL_NAME_FILE_AR, 'path', $keyFile, true);
+				}
 
-				$loadFile = Yii::app()->CFile->set(self::PATH_LOAD.DIRECTORY_SEPARATOR.$oldPathFile.$objFile->get_Name($oldNameFile), true);
+				$loadFile = Yii::app()->CFile->set(self::PATH_LOAD.DIRECTORY_SEPARATOR.$oldPathFile.$oldNameFile, true);
 				$loadFile->rename(self::PATH_LOAD.DIRECTORY_SEPARATOR.$userPathFile.$newNameFile);
 
 			}
