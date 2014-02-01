@@ -101,6 +101,9 @@ final class DefaultPluginStoreFile extends AbsPluginStoreFile implements IPlugin
 				}
 
 				$loadFile = Yii::app()->CFile->set(self::PATH_LOAD.DIRECTORY_SEPARATOR.$oldPathFile.$oldNameFile, true);
+				if($userPathFile) {
+					$loadFile->createDir(0754, self::PATH_LOAD.DIRECTORY_SEPARATOR.$userPathFile);
+				}
 				$loadFile->rename(self::PATH_LOAD.DIRECTORY_SEPARATOR.$userPathFile.$newNameFile);
 
 			}
