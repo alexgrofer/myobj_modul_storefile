@@ -10,6 +10,18 @@ class CStoreFile extends AbsCStoreFile {
 
 	public function __construct($objPlugin) {
 		$this->objPlugin = $objPlugin;
+		$this->setAutoParams($this->objPlugin->arObj);
+	}
+
+	/**
+	 * @param $arObj Заполнить поля существующего файла, не для нового
+	 */
+	protected function setAutoParams($arObj) {
+		if($arObj->isNewRecord===false) {
+			foreach($this->getListEdit() as $name) {
+
+			}
+		}
 	}
 	/**
 	 * Сохранить файл в базе и на сервере (может работать через сокет если это описано в плагине)

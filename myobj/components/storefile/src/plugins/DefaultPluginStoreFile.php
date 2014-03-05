@@ -1,4 +1,8 @@
 <?php
+/**
+ * Class DefaultPluginStoreFile
+ * Плагин для работы с файлами по умолчанию, работает на AR модели
+ */
 final class DefaultPluginStoreFile extends AbsPluginStoreFile implements IPluginStoreFileARModel
 {
 	const PATH_LOAD = 'media/upload/storefile'; //главная дирректория плагина, не можем изменять
@@ -12,58 +16,51 @@ final class DefaultPluginStoreFile extends AbsPluginStoreFile implements IPlugin
 	}
 
 	public $arObj; //объект yii AR которым будет управлять плагин
-	public function buildStoreFile($ARObj) {
-		//создать объект файла
+	public function buildStoreFile(CActiveRecord $ARObj) {
 		$nameClassStoreFile = $this->getClassFileName();
-		$clonePlugin = clone $this;
-		$objStoreFile = new $nameClassStoreFile($clonePlugin);
-		$clonePlugin->arObj = $ARObj;
-		$clonePlugin->arObj->thiObjFile = $objStoreFile;
-		return $clonePlugin->arObj->thiObjFile;
+		//создать плагин
+		$objPlugin = new self();
+		//упомянуть в плагине о объекте AR модели с которой будем работать
+		$objPlugin->arObj = $ARObj;
+		//создать объект класса файла
+		$objStoreFile = new $nameClassStoreFile($objPlugin);
+
+		return $objStoreFile;
 	}
 
 	/**
 	 * Инициализация объектов файлов свойственной для этого планина, каждый плагин может по своему искать, инициализировать файлы
-	 * @param null $arrIdObj массив id файлов или объект AR
-	 * @return mixed может быть массив или один объект типа getClassFileName
+	 * @param mixed $arrIdObj id объектов для инициализации или null если новый
+	 * @return array|AbsCStoreFile
 	 */
 	public function factoryInit($arrIdObj=null) {
-		if(is_object($arrIdObj)) {
-			$objModelStoreFile = $arrIdObj;
-		}
-		else {
-			$nameClassARModel = $this::MODEL_AR;
-			$objModelStoreFile = new $nameClassARModel();
-		}
+		$nameClassARModel = $this::MODEL_AR;
+		$objModelStoreFile = new $nameClassARModel();
 
-		if(!$arrIdObj || is_object($arrIdObj)) {
+		if($arrIdObj===null) {
 			return $this->buildStoreFile($objModelStoreFile);
 		}
-		elseif(is_array($arrIdObj) && count($arrIdObj)) {
+		else {
 			$objModelStoreFile->dbCriteria->addInCondition('id', $arrIdObj);
 			$arrayObjARStoreFile = $objModelStoreFile->findAll();
 			$arrayObjStoreFile = array();
 			foreach($arrayObjARStoreFile as $ARObj) {
 				$arrayObjStoreFile[] = $this->buildStoreFile($ARObj);
 			}
+
 			return $arrayObjStoreFile;
 		}
 	}
 
-	//описывает что делать с объектом при сохранении
+	/**
+	 * описывает что делать с объектом при сохранении
+	 * @param $objFile
+	 */
 	public function save($objFile) {
-		//сам объект $objFile->objPlugin->arObj - возможно нужно поменять значения earray перед сохранением
-		//управляющий плагин (сконфигурированный) $objFile->objPlugin
-
-		//1)Если добавил пачкой
-		/* @var CStoreFile $objFile */
-
 		foreach($objFile->realArrayConfObj as $keyFile => $newSetting) {
 			//DATA EDIT
-
 			$userPathFile = '';
 			if(isset($newSetting['path'])) {
-				//изменить earray
 				$this->arObj->edit_EArray($newSetting['path'],self::COL_NAME_FILE_AR,'path',$keyFile);
 				$userPathFile = $newSetting['path'].DIRECTORY_SEPARATOR;
 			}
@@ -75,7 +72,7 @@ final class DefaultPluginStoreFile extends AbsPluginStoreFile implements IPlugin
 			if(isset($newSetting['sort'])) {
 				$this->arObj->edit_EArray($newSetting['sort'],self::COL_NAME_FILE_AR,'sort',$keyFile);
 			}
-			//FILE EDIT
+			//МЕНЯЕТ САМ ФАЙЛ
 			if(isset($newSetting['file'])) {
 
 				$newFileUploader = $newSetting['file'];
@@ -113,7 +110,7 @@ final class DefaultPluginStoreFile extends AbsPluginStoreFile implements IPlugin
 			}
 		}
 
-		//создание миниатюр и т.д - вызвать спец метод именно плагина realty
+		//создание миниатюр и т.д - вызвать спец метод именно плагина realty нужно будет просто унаследовать parent::
 	}
 
 	//описывает что делать с объектом при удалении
@@ -121,9 +118,11 @@ final class DefaultPluginStoreFile extends AbsPluginStoreFile implements IPlugin
 
 	}
 
-	//кастомно определяет правила валидации для текушей модели файла
+	/**
+	 * В модели AR будет в beforeValidate
+	 */
 	public function validateModel() {
-		//можно установить максимумы размеров например
+		//можно выделить сюда переменную и менять валидацию
 	}
 
 	//методы помошники рандомы, кропы для картинок, архивация

@@ -3,9 +3,19 @@ abstract class AbsCStoreFile extends CComponent {
 	/**
 	 * @var DefaultPluginStoreFile объект плагина
 	 */
-
-	//у каждого объекта должен быть плагин для поведения
 	public $objPlugin;
+
+	/**
+	 * @return array Список возможных для редактирования полей
+	 */
+	protected function getListEdit() {
+		return array(
+			'name',
+			'path',
+			'title',
+			'sort',
+		);
+	}
 
 	//у каждого объекта должен быть уникальный id
 	private $_id;
@@ -17,7 +27,15 @@ abstract class AbsCStoreFile extends CComponent {
 		return $this->_id;
 	}
 
+	/**
+	 * @var array Массив заполняется ключами в случае изменения ключей объекта
+	 */
 	public $realArrayConfObj=array();
+	/**
+	 * @var array Массив заполняется реальными данными из уже существующего объекта.
+	 * Для новых объектов он пуст
+	 */
+	protected  $autoArrayConfObj=array();
 
 	protected function _getDefParam($name,$key) {
 		return (isset($this->realArrayConfObj[$key]) && isset($this->realArrayConfObj[$key][$name]))?
@@ -60,10 +78,14 @@ abstract class AbsCStoreFile extends CComponent {
 		return $this->_getDefParam('sort',$key);
 	}
 
-	//not real это не сохранятся только для признака что делать с файлом
-	//установить новый файл
-	public function set_File(CUploadedFile $path,$key) {
-		$this->_setDefParam('file',$key,$path);
+	//ВСПОМОГАТЕЛЬНЫЕ МЕТОДЫ, НЕ ЯВЛЯЮТСЯ ХРАНИМЫМИ ДАННЫМИ
+
+	/**
+	 * @param mixed $file можно загрузить один или множество файлов
+	 * @param $key
+	 */
+	public function set_File($file,$key) {
+		$this->_setDefParam('file',$key,$file);
 	}
 	public function get_File($key) {
 		return $this->_getDefParam('file',$key);

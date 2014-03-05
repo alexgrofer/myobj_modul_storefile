@@ -13,7 +13,10 @@ class AbsModelARStoreFile extends AbsModel
 	public $content_file_array;
 	//дата создания
 	public $createDate;
-	/* Имет значение когда будет отдельnная строка для каждого файла, ONE когда нужно более 10 файлов
+	/* Имет значение когда будет отдельная строка для каждого файла, ONE когда нужно более 10 файлов
+	public $name;
+	public $title;
+	public $path;
 	public $sort;
 	public $size;
 
@@ -55,22 +58,22 @@ class AbsModelARStoreFile extends AbsModel
 	public $namePluginLoader;
 
 	//тут файл
-	public $thiObjFile;
+	//public $thiObjFile;
 	protected function beforeDelete() {
 		//плагин в файле знает что делать дальше в методе del
-		$this->thiObjFile->del();
+		//$this->thiObjFile->del();
 		return parent::beforeDelete();
 	}
 
 	protected function beforeSave() {
-		$this->thiObjFile->save();
+		//$this->thiObjFile->save();
 		return parent::beforeSave();
 	}
 
 	protected function beforeValidate()
 	{
 		//кастомно может поменять правила проверки для модели
-		$this->thiObjFile->objPlugin->validateModel();
+		//$this->thiObjFile->objPlugin->validateModel();
 		return parent::beforeValidate();
 	}
 

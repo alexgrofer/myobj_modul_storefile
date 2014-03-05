@@ -1,6 +1,6 @@
 <?php
 $objPlugin = new $modelAD->namePluginLoader();
-$objFile = yii::app()->storeFile->obj($objPlugin,$modelAD);
+$objFile = yii::app()->storeFile->obj($objPlugin);
 
 $paramsQueryPostModel = yii::app()->getRequest()->getPost(get_class($modelAD));
 if($paramsQueryPostModel) {
@@ -18,6 +18,7 @@ if((isset($isValidate) && $isValidate) && $this->dicturls['action']=='edit') {
 	$files = CUploadedFile::getInstancesByName(get_class($modelAD).'[fileAdd]');
 
 	if($modelAD->indexEdit!='') {
+		//если он сам передает какой элемент будт менять
 		$indexEdit = $modelAD->indexEdit;
 	}
 	else {

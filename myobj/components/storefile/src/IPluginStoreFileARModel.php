@@ -4,5 +4,5 @@
  */
 interface IPluginStoreFileARModel {
 	//собирает файл из объекта AR
-	public function buildStoreFile($ARObj);
+	public function buildStoreFile(CActiveRecord $ARObj);
 }
