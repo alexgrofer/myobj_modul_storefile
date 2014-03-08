@@ -1,31 +1,31 @@
 <?php
-/*
- * файлы всегда лежат в массиве вне зависимости одиночно будут хранится или множественно, для сортировок одиночек есть параметр size
+/**
+ * Класс необходим для админки
+ * Class AdminModelARStoreFile
  */
 class AdminModelARStoreFile extends ModelARStoreFile
 {
 	/**
-	 * @var Название плагина который будет использоваться для этой модели по умолчанию
+	 * Файл помошник для админки в представлении сохраняется
+	 * @var CStoreFile
 	 */
-	public $namePluginLoader=EnumerationPluginStoreFile::DEF_ADMIN;
+	public $thisObjFile;
 
-	//тут файл
-	public $thiObjFile;
 	protected function beforeDelete() {
 		//плагин в файле знает что делать дальше в методе del
-		$this->thiObjFile->del();
+		$this->thisObjFile->del();
 		return parent::beforeDelete();
 	}
 
 	protected function beforeSave() {
-		$this->thiObjFile->save();
+		$this->thisObjFile->save();
 		return parent::beforeSave();
 	}
 
 	protected function beforeValidate()
 	{
 		//кастомно может поменять правила проверки для модели
-		$this->thiObjFile->objPlugin->validateModel();
+		$this->thisObjFile->objPlugin->validateModel();
 		return parent::beforeValidate();
 	}
 }

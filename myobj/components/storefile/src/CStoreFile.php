@@ -10,16 +10,15 @@ class CStoreFile extends AbsCStoreFile {
 
 	public function __construct($objPlugin) {
 		$this->objPlugin = $objPlugin;
-		$this->setAutoParams($this->objPlugin->arObj);
 	}
 
 	/**
 	 * @param $arObj Заполнить поля существующего файла, не для нового
 	 */
-	protected function setAutoParams($arObj) {
+	public  function setAutoParams($arObj) {
 		if($arObj->isNewRecord===false) {
-			foreach($this->getListEdit() as $name) {
-
+			foreach($this->getListEdit() as $index => $keyName) {
+				$this->autoArrayConfObj[$index][$keyName] = $this->arObj->get_EArray($this->arObj->getNameColEArray(), 'name', $keyName, true);
 			}
 		}
 	}

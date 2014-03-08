@@ -2,12 +2,13 @@
 /*
  * файлы всегда лежат в массиве вне зависимости одиночно будут хранится или множественно, для сортировок одиночек есть параметр size
  */
-class AbsModelARStoreFile extends AbsModel
+abstract class AbsModelARStoreFile extends AbsModel
 {
 	public function tableName()
 	{
-		return 'setcms_'.strtolower(get_class($this));
+		return 'setcms_modelarstorefile';
 	}
+
 	//schema
 	//тут хранится файл-лы
 	public $content_file_array;
@@ -54,32 +55,9 @@ class AbsModelARStoreFile extends AbsModel
 	//end
 	//conf
 
-	//название плагина если редактирование из админки
-	public $namePluginLoader;
-
-	//тут файл
-	//public $thiObjFile;
-	protected function beforeDelete() {
-		//плагин в файле знает что делать дальше в методе del
-		//$this->thiObjFile->del();
-		return parent::beforeDelete();
-	}
-
-	protected function beforeSave() {
-		//$this->thiObjFile->save();
-		return parent::beforeSave();
-	}
-
-	protected function beforeValidate()
-	{
-		//кастомно может поменять правила проверки для модели
-		//$this->thiObjFile->objPlugin->validateModel();
-		return parent::beforeValidate();
-	}
-
 	public function customRules() {
 		return array(
-			array('content_file_array', 'safe'),
+			array($this->getNameColEArray(), 'safe'),
 			array('indexEdit', 'numerical', 'integerOnly'=>true),
 			array('createDate', 'default',
 				'value'=>new CDbExpression('NOW()'),
@@ -149,32 +127,6 @@ class AbsModelARStoreFile extends AbsModel
 				'type'=>'checkbox',
 			),
 			'<hr/>files: <span style="color: red">not edit element IF want edit file!! only DB saves</span><hr/>'
-		);
-	}
-
-	public function typesEArray() {
-		return array(
-			'content_file_array' => array(
-				'elements' => array(
-					'name',
-					'title',
-					'path',
-					'sort',//при отдельном хранении файла не нужен ТУТ
-				),
-				'conf' => array(
-					'isMany'=>true,
-				),
-				'rules'=>array(
-					'*'=>array(
-						array('safe'),
-					),
-				),
-				'elementsForm' => array(
-					'*'=>array(
-						'type'=>'text',
-					),
-				),
-			)
 		);
 	}
 }

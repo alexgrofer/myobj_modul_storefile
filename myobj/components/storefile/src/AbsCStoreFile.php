@@ -40,8 +40,12 @@ abstract class AbsCStoreFile extends CComponent {
 	protected function _getDefParam($name,$key) {
 		return (isset($this->realArrayConfObj[$key]) && isset($this->realArrayConfObj[$key][$name]))?
 			$this->realArrayConfObj[$key][$name]
-			:
-			null;
+			: //если не заполнен новым значением то вернуть то что было при инициализации объекта AR
+			(isset($this->autoArrayConfObj[$key]) && isset($this->autoArrayConfObj[$key][$name]))?
+				$this->realArrayConfObj[$key][$name]
+				:
+				null
+			;
 	}
 	protected function _setDefParam($name,$key,$val) {
 		$this->realArrayConfObj[$key][$name] = $val;

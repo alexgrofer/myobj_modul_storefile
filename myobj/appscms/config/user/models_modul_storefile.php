@@ -2,7 +2,7 @@
 $models = array(
 	//STORE
 	'storefile' => array(
-		'namemodel' => 'ModelARStoreFile',
+		'namemodel' => 'AdminModelARStoreFile',
 		'order_by' => array('id DESC'),
 		'controller' => array('default'=>'storefile/defmodel.php'),
 	),

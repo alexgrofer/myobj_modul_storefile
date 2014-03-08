@@ -7,7 +7,6 @@ final class DefaultPluginStoreFile extends AbsPluginStoreFile implements IPlugin
 {
 	const PATH_LOAD = 'media/upload/storefile'; //главная дирректория плагина, не можем изменять
 	const MODEL_AR = 'ModelARStoreFile'; //модель в которой хранятся хранится файлы
-	const COL_NAME_FILE_AR = 'content_file_array';
 	const COUNT_SING_RAND_NAME = 15;
 
 	//обязательный метод определит название класса файла возвращаемый плагином
@@ -15,15 +14,15 @@ final class DefaultPluginStoreFile extends AbsPluginStoreFile implements IPlugin
 		return 'CStoreFile';
 	}
 
-	public $arObj; //объект yii AR которым будет управлять плагин
 	public function buildStoreFile(CActiveRecord $ARObj) {
 		$nameClassStoreFile = $this->getClassFileName();
 		//создать плагин
-		$objPlugin = new self();
-		//упомянуть в плагине о объекте AR модели с которой будем работать
-		$objPlugin->arObj = $ARObj;
+		$objPlugin = new DefaultPluginStoreFile();
 		//создать объект класса файла
 		$objStoreFile = new $nameClassStoreFile($objPlugin);
+		$objStoreFile->setAutoParams($ARObj);
+
+		$ARObj->thisObjFile = $objStoreFile;
 
 		return $objStoreFile;
 	}
@@ -61,16 +60,16 @@ final class DefaultPluginStoreFile extends AbsPluginStoreFile implements IPlugin
 			//DATA EDIT
 			$userPathFile = '';
 			if(isset($newSetting['path'])) {
-				$this->arObj->edit_EArray($newSetting['path'],self::COL_NAME_FILE_AR,'path',$keyFile);
+				$this->arObj->edit_EArray($newSetting['path'],$this->arObj->getNameColEArray(),'path',$keyFile);
 				$userPathFile = $newSetting['path'].DIRECTORY_SEPARATOR;
 			}
 
 			if(isset($newSetting['title'])) {
-				$this->arObj->edit_EArray($newSetting['title'],self::COL_NAME_FILE_AR,'title',$keyFile);
+				$this->arObj->edit_EArray($newSetting['title'],$this->arObj->getNameColEArray(),'title',$keyFile);
 			}
 
 			if(isset($newSetting['sort'])) {
-				$this->arObj->edit_EArray($newSetting['sort'],self::COL_NAME_FILE_AR,'sort',$keyFile);
+				$this->arObj->edit_EArray($newSetting['sort'],$this->arObj->getNameColEArray(),'sort',$keyFile);
 			}
 			//МЕНЯЕТ САМ ФАЙЛ
 			if(isset($newSetting['file'])) {
@@ -91,10 +90,10 @@ final class DefaultPluginStoreFile extends AbsPluginStoreFile implements IPlugin
 			elseif(isset($newSetting['rand']) || isset($newSetting['name'])) {
 				$newNameFile = (isset($newSetting['rand']))?self::randName(self::COUNT_SING_RAND_NAME):$newSetting['name'];
 
-				$oldNameFile = $this->arObj->get_EArray(self::COL_NAME_FILE_AR, 'name', $keyFile, true);
+				$oldNameFile = $this->arObj->get_EArray($this->arObj->getNameColEArray(), 'name', $keyFile, true);
 				$oldPathFile = '';
-				if($this->arObj->has_EArray(self::COL_NAME_FILE_AR, 'path', $keyFile, true)) {
-					$oldPathFile = $this->arObj->get_EArray(self::COL_NAME_FILE_AR, 'path', $keyFile, true);
+				if($this->arObj->has_EArray($this->arObj->getNameColEArray(), 'path', $keyFile, true)) {
+					$oldPathFile = $this->arObj->get_EArray($this->arObj->getNameColEArray(), 'path', $keyFile, true);
 				}
 
 				$loadFile = Yii::app()->CFile->set(self::PATH_LOAD.DIRECTORY_SEPARATOR.$oldPathFile.$oldNameFile, true);
@@ -106,7 +105,7 @@ final class DefaultPluginStoreFile extends AbsPluginStoreFile implements IPlugin
 			}
 			//OBJ EDIT
 			if(isset($newNameFile)) {
-				$this->arObj->edit_EArray($newNameFile,self::COL_NAME_FILE_AR,'name',$keyFile);
+				$this->arObj->edit_EArray($newNameFile,$this->arObj->getNameColEArray(),'name',$keyFile);
 			}
 		}
 
@@ -129,7 +128,7 @@ final class DefaultPluginStoreFile extends AbsPluginStoreFile implements IPlugin
 
 	//индекс следующего нового элемента
 	public function getNextIndex() {
-		return count($this->arObj->get_EArray(self::COL_NAME_FILE_AR));
+		return count($this->arObj->get_EArray($this->arObj->getNameColEArray()));
 	}
 
 	public static function randName($countSings) {

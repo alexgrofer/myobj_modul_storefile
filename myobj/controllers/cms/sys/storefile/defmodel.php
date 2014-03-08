@@ -1,6 +1,5 @@
 <?php
-$objPlugin = new $modelAD->namePluginLoader();
-$objFile = yii::app()->storeFile->obj($objPlugin);
+$objFile = yii::app()->storeFile->obj(EnumerationPluginStoreFile::DEF);
 
 $paramsQueryPostModel = yii::app()->getRequest()->getPost(get_class($modelAD));
 if($paramsQueryPostModel) {
