@@ -5,7 +5,6 @@
  */
 class AdminModelARStoreFile extends ModelARStoreFile
 {
-
 	protected function beforeDelete() {
 		//плагин в файле знает что делать дальше в методе del
 		$this->thisObjFile->del();
@@ -17,10 +16,10 @@ class AdminModelARStoreFile extends ModelARStoreFile
 		return parent::beforeSave();
 	}
 
-	protected function beforeValidate()
-	{
+	//protected function beforeValidate()
+	//{
 		//кастомно может поменять правила проверки для модели
-		$this->thisObjFile->objPlugin->validateModel();
-		return parent::beforeValidate();
-	}
+		//$this->thisObjFile->objPlugin->validateModel();
+		//return parent::beforeValidate();
+	//}
 }

@@ -4,6 +4,12 @@
  */
 abstract class AbsModelARStoreFile extends AbsModel
 {
+	/**
+	 * Экземпляр объекта файла может быть полезен в моделе
+	 * @var CStoreFile
+	 */
+	public $thisObjFile;
+
 	public function tableName()
 	{
 		return 'setcms_modelarstorefile';

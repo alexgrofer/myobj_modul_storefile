@@ -24,9 +24,8 @@ final class DefaultPluginStoreFile extends AbsPluginStoreFile implements IPlugin
 		$objStoreFile->initAutoParams($activeRObj);
 		//файл должен знать о модели
 		$objStoreFile->activeRObj = $activeRObj;
-
 		//модель должна знать о файле
-		$activeRObj->thisObjFile = $objStoreFile;
+		$objStoreFile->activeRObj->thisObjFile = $objStoreFile;
 
 		return $objStoreFile;
 	}
@@ -42,6 +41,9 @@ final class DefaultPluginStoreFile extends AbsPluginStoreFile implements IPlugin
 
 		if($arrIdObj===null) {
 			return $this->buildStoreFile($objModelStoreFile);
+		}
+		elseif(is_object($arrIdObj)) {
+			return $this->buildStoreFile($arrIdObj);
 		}
 		else {
 			$objModelStoreFile->dbCriteria->addInCondition('id', $arrIdObj);

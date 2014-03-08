@@ -1,5 +1,8 @@
 <?php
-$objFile = yii::app()->storeFile->obj(EnumerationPluginStoreFile::DEF);
+$idObj = null; //если новый , если нет то передать массив из одного или id Решить
+$objFile = yii::app()->storeFile->obj(EnumerationPluginStoreFile::DEF,$modelAD);
+//$objFile->activeRObj->thisObjFile = $objFile;
+//$modelAD = $objFile->activeRObj;
 
 $paramsQueryPostModel = yii::app()->getRequest()->getPost(get_class($modelAD));
 if($paramsQueryPostModel) {
