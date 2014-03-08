@@ -9,9 +9,6 @@ abstract class AbsModelARStoreFile extends AbsModel
 		return 'setcms_modelarstorefile';
 	}
 
-	//schema
-	//тут хранится файл-лы
-	public $content_file_array;
 	//дата создания
 	public $createDate;
 	/* Имет значение когда будет отдельная строка для каждого файла, ONE когда нужно более 10 файлов
@@ -23,7 +20,6 @@ abstract class AbsModelARStoreFile extends AbsModel
 
 	public $top; //к примеру категория программы или фото-альбом при создании новой модели придумать название колонки или даже сделать внешний ключ
 	*/
-	//end
 
 	//параметры которых нет в схеме таблицы
 

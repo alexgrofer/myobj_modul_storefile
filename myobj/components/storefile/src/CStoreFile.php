@@ -4,21 +4,22 @@
  * Class CStoreFileModel
  */
 class CStoreFile extends AbsCStoreFile {
-	/**
-	 * @var Объект модели
-	 */
-
 	public function __construct($objPlugin) {
 		$this->objPlugin = $objPlugin;
 	}
 
 	/**
+	 * @var переменная хранит объект модели
+	 */
+	public $activeRObj;
+
+	/**
 	 * @param $arObj Заполнить поля существующего файла, не для нового
 	 */
-	public  function setAutoParams($arObj) {
-		if($arObj->isNewRecord===false) {
+	public function initAutoParams($ActiveRObj) {
+		if($ActiveRObj->isNewRecord===false) {
 			foreach($this->getListEdit() as $index => $keyName) {
-				$this->autoArrayConfObj[$index][$keyName] = $this->arObj->get_EArray($this->arObj->getNameColEArray(), 'name', $keyName, true);
+				$this->autoArrayConfObj[$index][$keyName] = $ActiveRObj->get_EArray($ActiveRObj->getNameColEArray(), $keyName, $index, true);
 			}
 		}
 	}
@@ -38,5 +39,10 @@ class CStoreFile extends AbsCStoreFile {
 			unset($this->_realArrayConfObj[$key]);
 		}
 		$this->objPlugin->del($this,$key);
+	}
+
+	//это для EArray
+	public function getNextIndex() {
+		$this->objPlugin->getNextIndex($this);
 	}
 }

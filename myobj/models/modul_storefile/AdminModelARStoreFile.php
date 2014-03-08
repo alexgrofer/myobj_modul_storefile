@@ -5,11 +5,6 @@
  */
 class AdminModelARStoreFile extends ModelARStoreFile
 {
-	/**
-	 * Файл помошник для админки в представлении сохраняется
-	 * @var CStoreFile
-	 */
-	public $thisObjFile;
 
 	protected function beforeDelete() {
 		//плагин в файле знает что делать дальше в методе del

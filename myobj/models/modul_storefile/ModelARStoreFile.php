@@ -1,6 +1,14 @@
 <?php
 class ModelARStoreFile extends AbsModelARStoreFile implements IEArrayModelARStoreFile
 {
+	/**
+	 * Экземпляр объекта файла может быть полезен в моделе
+	 * @var CStoreFile
+	 */
+	public $thisObjFile;
+
+	public $content_file_array;
+
 	public function getNameColEArray() {
 		return 'content_file_array';
 	}

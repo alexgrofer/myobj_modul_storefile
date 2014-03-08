@@ -1,5 +1,13 @@
 <?php
 abstract class AbsCStoreFile extends CComponent {
+	private $_id;
+	public function getId() {
+		return $this->_id;
+	}
+	public function setId($id) {
+		return $this->_id = $id;
+	}
+
 	/**
 	 * @var DefaultPluginStoreFile объект плагина
 	 */
@@ -17,16 +25,6 @@ abstract class AbsCStoreFile extends CComponent {
 		);
 	}
 
-	//у каждого объекта должен быть уникальный id
-	private $_id;
-
-	public function getNamePlugin() {
-		return get_class($this->objPlugin);
-	}
-	public function getId() {
-		return $this->_id;
-	}
-
 	/**
 	 * @var array Массив заполняется ключами в случае изменения ключей объекта
 	 */
@@ -35,7 +33,7 @@ abstract class AbsCStoreFile extends CComponent {
 	 * @var array Массив заполняется реальными данными из уже существующего объекта.
 	 * Для новых объектов он пуст
 	 */
-	protected  $autoArrayConfObj=array();
+	public $autoArrayConfObj=array();
 
 	protected function _getDefParam($name,$key) {
 		return (isset($this->realArrayConfObj[$key]) && isset($this->realArrayConfObj[$key][$name]))?
@@ -51,7 +49,6 @@ abstract class AbsCStoreFile extends CComponent {
 		$this->realArrayConfObj[$key][$name] = $val;
 	}
 
-	//относительный путь к файлу
 	public function set_Name($name,$key) {
 		$this->_setDefParam('name',$key,$name);
 	}
@@ -66,7 +63,6 @@ abstract class AbsCStoreFile extends CComponent {
 		return $this->_getDefParam('path',$key);
 	}
 
-	//установить описание для файла
 	public function set_Title($title,$key) {
 		$this->_setDefParam('title',$key,$title);
 	}
@@ -74,7 +70,6 @@ abstract class AbsCStoreFile extends CComponent {
 		return $this->_getDefParam('title',$key);
 	}
 
-	//сортировка файлов
 	public function set_Sort($sort,$key) {
 		$this->_setDefParam('sort',$key,$sort);
 	}
@@ -102,8 +97,4 @@ abstract class AbsCStoreFile extends CComponent {
 	public function get_IsRand($key) {
 		return $this->_getDefParam('rand',$key);
 	}
-
-	//+остальные необходимые методы, допустимы также в классе наследнике
-
-	//end not real
 }

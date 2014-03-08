@@ -21,7 +21,7 @@ if((isset($isValidate) && $isValidate) && $this->dicturls['action']=='edit') {
 		$indexEdit = $modelAD->indexEdit;
 	}
 	else {
-		$indexEdit = $objFile->objPlugin->getNextIndex();
+		$indexEdit = $objFile->getNextIndex();
 	}
 
 	$lambda_key = function($indexEdit) use($modelAD,$objFile) {

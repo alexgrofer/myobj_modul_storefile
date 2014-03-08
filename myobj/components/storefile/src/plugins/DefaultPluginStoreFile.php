@@ -14,15 +14,19 @@ final class DefaultPluginStoreFile extends AbsPluginStoreFile implements IPlugin
 		return 'CStoreFile';
 	}
 
-	public function buildStoreFile(CActiveRecord $ARObj) {
+	public function buildStoreFile(CActiveRecord $activeRObj) {
 		$nameClassStoreFile = $this->getClassFileName();
 		//создать плагин
 		$objPlugin = new DefaultPluginStoreFile();
 		//создать объект класса файла
 		$objStoreFile = new $nameClassStoreFile($objPlugin);
-		$objStoreFile->setAutoParams($ARObj);
+		//файл должен знать о параметрах модели
+		$objStoreFile->initAutoParams($activeRObj);
+		//файл должен знать о модели
+		$objStoreFile->activeRObj = $activeRObj;
 
-		$ARObj->thisObjFile = $objStoreFile;
+		//модель должна знать о файле
+		$activeRObj->thisObjFile = $objStoreFile;
 
 		return $objStoreFile;
 	}
@@ -34,7 +38,7 @@ final class DefaultPluginStoreFile extends AbsPluginStoreFile implements IPlugin
 	 */
 	public function factoryInit($arrIdObj=null) {
 		$nameClassARModel = $this::MODEL_AR;
-		$objModelStoreFile = new $nameClassARModel();
+		$objModelStoreFile = $nameClassARModel::model();
 
 		if($arrIdObj===null) {
 			return $this->buildStoreFile($objModelStoreFile);
@@ -43,8 +47,8 @@ final class DefaultPluginStoreFile extends AbsPluginStoreFile implements IPlugin
 			$objModelStoreFile->dbCriteria->addInCondition('id', $arrIdObj);
 			$arrayObjARStoreFile = $objModelStoreFile->findAll();
 			$arrayObjStoreFile = array();
-			foreach($arrayObjARStoreFile as $ARObj) {
-				$arrayObjStoreFile[] = $this->buildStoreFile($ARObj);
+			foreach($arrayObjARStoreFile as $activeRObj) {
+				$arrayObjStoreFile[] = $this->buildStoreFile($activeRObj);
 			}
 
 			return $arrayObjStoreFile;
@@ -60,16 +64,16 @@ final class DefaultPluginStoreFile extends AbsPluginStoreFile implements IPlugin
 			//DATA EDIT
 			$userPathFile = '';
 			if(isset($newSetting['path'])) {
-				$this->arObj->edit_EArray($newSetting['path'],$this->arObj->getNameColEArray(),'path',$keyFile);
+				$objFile->activeRObj->edit_EArray($newSetting['path'],$objFile->activeRObj->getNameColEArray(),'path',$keyFile);
 				$userPathFile = $newSetting['path'].DIRECTORY_SEPARATOR;
 			}
 
 			if(isset($newSetting['title'])) {
-				$this->arObj->edit_EArray($newSetting['title'],$this->arObj->getNameColEArray(),'title',$keyFile);
+				$objFile->activeRObj->edit_EArray($newSetting['title'],$objFile->activeRObj->getNameColEArray(),'title',$keyFile);
 			}
 
 			if(isset($newSetting['sort'])) {
-				$this->arObj->edit_EArray($newSetting['sort'],$this->arObj->getNameColEArray(),'sort',$keyFile);
+				$objFile->activeRObj->edit_EArray($newSetting['sort'],$objFile->activeRObj->getNameColEArray(),'sort',$keyFile);
 			}
 			//МЕНЯЕТ САМ ФАЙЛ
 			if(isset($newSetting['file'])) {
@@ -90,10 +94,10 @@ final class DefaultPluginStoreFile extends AbsPluginStoreFile implements IPlugin
 			elseif(isset($newSetting['rand']) || isset($newSetting['name'])) {
 				$newNameFile = (isset($newSetting['rand']))?self::randName(self::COUNT_SING_RAND_NAME):$newSetting['name'];
 
-				$oldNameFile = $this->arObj->get_EArray($this->arObj->getNameColEArray(), 'name', $keyFile, true);
+				$oldNameFile = $objFile->activeRObj->get_EArray($objFile->activeRObj->getNameColEArray(), 'name', $keyFile, true);
 				$oldPathFile = '';
-				if($this->arObj->has_EArray($this->arObj->getNameColEArray(), 'path', $keyFile, true)) {
-					$oldPathFile = $this->arObj->get_EArray($this->arObj->getNameColEArray(), 'path', $keyFile, true);
+				if($objFile->activeRObj->has_EArray($objFile->activeRObj->getNameColEArray(), 'path', $keyFile, true)) {
+					$oldPathFile = $objFile->activeRObj->get_EArray($objFile->activeRObj->getNameColEArray(), 'path', $keyFile, true);
 				}
 
 				$loadFile = Yii::app()->CFile->set(self::PATH_LOAD.DIRECTORY_SEPARATOR.$oldPathFile.$oldNameFile, true);
@@ -105,7 +109,7 @@ final class DefaultPluginStoreFile extends AbsPluginStoreFile implements IPlugin
 			}
 			//OBJ EDIT
 			if(isset($newNameFile)) {
-				$this->arObj->edit_EArray($newNameFile,$this->arObj->getNameColEArray(),'name',$keyFile);
+				$objFile->activeRObj->edit_EArray($newNameFile,$objFile->activeRObj->getNameColEArray(),'name',$keyFile);
 			}
 		}
 
@@ -127,8 +131,9 @@ final class DefaultPluginStoreFile extends AbsPluginStoreFile implements IPlugin
 	//методы помошники рандомы, кропы для картинок, архивация
 
 	//индекс следующего нового элемента
-	public function getNextIndex() {
-		return count($this->arObj->get_EArray($this->arObj->getNameColEArray()));
+	public function getNextIndex($objFile) {
+		//но тут надо как то переделать для след элементов task
+		return count($objFile->autoArrayConfObj);
 	}
 
 	public static function randName($countSings) {
