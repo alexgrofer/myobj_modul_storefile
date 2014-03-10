@@ -17,17 +17,30 @@ final class DefaultPluginStoreFile extends AbsPluginStoreFile implements IPlugin
 	public function buildStoreFile(CActiveRecord $activeRObj) {
 		$nameClassStoreFile = $this->getClassFileName();
 		//создать плагин
-		$objPlugin = new DefaultPluginStoreFile();
+		$objPlugin = new static();
 		//создать объект класса файла
 		$objStoreFile = new $nameClassStoreFile($objPlugin);
-		//файл должен знать о параметрах модели
-		$objStoreFile->initAutoParams($activeRObj);
 		//файл должен знать о модели
 		$objStoreFile->activeRObj = $activeRObj;
 		//модель должна знать о файле
 		$objStoreFile->activeRObj->thisObjFile = $objStoreFile;
 
+		//файл должен знать о параметрах модели
+		$this->initAutoParams($objStoreFile);
+
 		return $objStoreFile;
+	}
+
+	/**
+	 * @param $arObj Заполнить поля существующего файла, не для нового
+	 */
+	protected function initAutoParams($objStoreFile) {
+		$array = $objStoreFile->activeRObj->get_EArray($objStoreFile->activeRObj->getNameColEArray());
+		foreach($array as $index => $arrayConf) {
+			foreach($arrayConf as $keyName => $val) {
+				$objStoreFile->autoArrayConfObj[$index][$keyName] = $val;
+			}
+		}
 	}
 
 	/**
@@ -37,23 +50,28 @@ final class DefaultPluginStoreFile extends AbsPluginStoreFile implements IPlugin
 	 */
 	public function factoryInit($arrIdObj=null) {
 		$nameClassARModel = $this::MODEL_AR;
-		$objModelStoreFile = $nameClassARModel::model();
 
 		if($arrIdObj===null) {
+			$objModelStoreFile = new $nameClassARModel;
+			$objModelStoreFile->declareObj();
 			return $this->buildStoreFile($objModelStoreFile);
 		}
 		elseif(is_object($arrIdObj)) {
 			return $this->buildStoreFile($arrIdObj);
 		}
-		else {
-			$objModelStoreFile->dbCriteria->addInCondition('id', $arrIdObj);
-			$arrayObjARStoreFile = $objModelStoreFile->findAll();
-			$arrayObjStoreFile = array();
-			foreach($arrayObjARStoreFile as $activeRObj) {
-				$arrayObjStoreFile[] = $this->buildStoreFile($activeRObj);
-			}
+		elseif(is_int($arrIdObj)) {
+			return $this->buildStoreFile($nameClassARModel::model()->findbyPk($arrIdObj));
+		}
+		elseif(is_array($arrIdObj)) {
+			//тут сделать через model()
+			//$objModelStoreFile->dbCriteria->addInCondition('id', $arrIdObj);
+			//$arrayObjARStoreFile = $objModelStoreFile->findAll();
+			//$arrayObjStoreFile = array();
+			//foreach($arrayObjARStoreFile as $activeRObj) {
+				//$arrayObjStoreFile[] = $this->buildStoreFile($activeRObj);
+			//}
 
-			return $arrayObjStoreFile;
+			//return $arrayObjStoreFile;
 		}
 	}
 
