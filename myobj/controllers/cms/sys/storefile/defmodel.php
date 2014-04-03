@@ -1,6 +1,6 @@
 <?php
 $idObj = null; //если новый , если нет то передать массив из одного или id Решить
-$objFile = yii::app()->storeFile->obj(EnumerationPluginStoreFile::DEF,$modelAD);
+$objFile = yii::app()->storeFile->obj(EnumerationPluginStoreFile::DEF_ADMIN,$modelAD);
 //$objFile->activeRObj->thisObjFile = $objFile;
 //$modelAD = $objFile->activeRObj;
 

@@ -131,4 +131,11 @@ abstract class AbsModelARStoreFile extends AbsModel
 			'<hr/>files: <span style="color: red">not edit element IF want edit file!! only DB saves</span><hr/>'
 		);
 	}
+
+	//protected function beforeValidate()
+	//{
+	//кастомно может поменять правила проверки для модели
+	//$this->thisObjFile->objPlugin->validateModel();
+	//return parent::beforeValidate();
+	//}
 }

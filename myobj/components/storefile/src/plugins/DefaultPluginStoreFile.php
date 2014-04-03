@@ -3,7 +3,7 @@
  * Class DefaultPluginStoreFile
  * Плагин для работы с файлами по умолчанию, работает на AR модели
  */
-final class DefaultPluginStoreFile extends AbsPluginStoreFile implements IPluginStoreFileARModel
+class DefaultPluginStoreFile extends AbsPluginStoreFile implements IPluginStoreFileARModel
 {
 	const PATH_LOAD = 'media/upload/storefile'; //главная дирректория плагина, не можем изменять
 	const MODEL_AR = 'ModelARStoreFile'; //модель в которой хранятся хранится файлы
@@ -133,7 +133,13 @@ final class DefaultPluginStoreFile extends AbsPluginStoreFile implements IPlugin
 			}
 		}
 
-		//создание миниатюр и т.д - вызвать спец метод именно плагина realty нужно будет просто унаследовать parent::
+		//сохранить измененную информацию
+		$this->saveInfo($objFile);
+	}
+
+	protected function saveInfo($objFile) {
+		$objFile->activeRObj->save();
+		//создание миниатюр и т.д - вызвать спец метод именно плагина realty нужно будет просто унаследовать parent
 	}
 
 	//описывает что делать с объектом при удалении

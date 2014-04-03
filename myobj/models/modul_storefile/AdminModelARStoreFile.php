@@ -15,11 +15,4 @@ class AdminModelARStoreFile extends ModelARStoreFile
 		$this->thisObjFile->save();
 		return parent::beforeSave();
 	}
-
-	//protected function beforeValidate()
-	//{
-		//кастомно может поменять правила проверки для модели
-		//$this->thisObjFile->objPlugin->validateModel();
-		//return parent::beforeValidate();
-	//}
 }
