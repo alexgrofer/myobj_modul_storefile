@@ -24,7 +24,7 @@ if((isset($isValidate) && $isValidate) && $this->dicturls['action']=='edit') {
 		$indexEdit = $modelAD->indexEdit;
 	}
 	else {
-		$indexEdit = $objFile->getNextIndex();
+		$indexEdit = $objFile->plugin->getNextIndex();
 	}
 
 	$lambda_key = function($indexEdit) use($modelAD,$objFile) {
@@ -45,6 +45,9 @@ if((isset($isValidate) && $isValidate) && $this->dicturls['action']=='edit') {
 		}
 		elseif($modelAD->nameFile!='') {
 			$objFile->set_Name($modelAD->nameFile,$indexEdit);
+		}
+		if($modelAD->is_del) {
+			$objFile->plugin->del($indexEdit);
 		}
 	};
 

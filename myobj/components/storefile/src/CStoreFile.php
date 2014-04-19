@@ -20,17 +20,14 @@ class CStoreFile extends AbsCStoreFile {
 	}
 
 	/**
-	 * Удалить файл и изменить объект
-	 * @param integer $key
+	 *  Удалит элемент сразу
+	 * @param null $key если null удалит все
 	 */
 	public function del($key=null) {
-		if($key) {
-			unset($this->_realArrayConfObj[$key]);
-		}
-		$this->objPlugin->del($this,$key);
+		$this->objPlugin->del($this, $key);
 	}
 
-	//это для EArray
+	//это для EArray если в одном объекте хранится много файлов
 	public function getNextIndex() {
 		$this->objPlugin->getNextIndex($this);
 	}

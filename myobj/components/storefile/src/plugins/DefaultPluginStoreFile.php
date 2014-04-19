@@ -142,11 +142,6 @@ class DefaultPluginStoreFile extends AbsPluginStoreFile implements IPluginStoreF
 		//создание миниатюр и т.д - вызвать спец метод именно плагина realty нужно будет просто унаследовать parent
 	}
 
-	//описывает что делать с объектом при удалении
-	public function del($objFile,$key=null) {
-
-	}
-
 	/**
 	 * В модели AR будет в beforeValidate
 	 */
@@ -156,14 +151,27 @@ class DefaultPluginStoreFile extends AbsPluginStoreFile implements IPluginStoreF
 
 	//методы помошники рандомы, кропы для картинок, архивация
 
+	public static function randName($countSings) {
+		$varStr = 'qwertyuiopasdfghjklzxcvbnm1234567890';
+		return substr(str_shuffle($varStr.$varStr),0,$countSings);
+	}
+
 	//индекс следующего нового элемента
 	public function getNextIndex($objFile) {
 		//но тут надо как то переделать для след элементов task
 		return count($objFile->autoArrayConfObj);
 	}
 
-	public static function randName($countSings) {
-		$varStr = 'qwertyuiopasdfghjklzxcvbnm1234567890';
-		return substr(str_shuffle($varStr.$varStr),0,$countSings);
+	//описывает что делать с объектом при удалении
+	public function del($objFile,$key=null) {
+		if($key===null) {
+			//удалить объект полностью
+		}
+		//изменить объект в БД
+		$objFile->activeRObj->edit_EArray(null,$objFile->activeRObj->getNameColEArray(),'name',$key);
+		//удалить физически
+
+		//сохранить измененную информацию
+		$this->saveInfo($objFile);
 	}
 }
